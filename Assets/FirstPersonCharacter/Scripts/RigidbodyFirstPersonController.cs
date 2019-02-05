@@ -185,34 +185,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
             m_Jump = false;
-
-						if(CrossPlatformInputManager.GetAxis("Fire1") != 0)
-						{
-							  RaycastHit hit;
-							  Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 200);
-                Debug.DrawRay(cam.transform.position, cam.transform.forward * 200, Color.red);
-								if(hit.collider != null)
-								{
-										try
-										{
-												hit.collider.gameObject.GetComponent<Scaler>().scale(-1);
-										}
-										catch { }
-								}
-						}
-						else if(CrossPlatformInputManager.GetAxis("Fire2") != 0)
-						{
-                RaycastHit hit;
-                Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 200);
-								if (hit.collider != null)
-								{
-										try
-										{
-												hit.collider.gameObject.GetComponent<Scaler>().scale(1);
-										}
-										catch { }
-								}
-						}
         }
 
 
