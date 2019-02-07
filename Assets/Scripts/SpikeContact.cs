@@ -1,44 +1,46 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SpikeContact : MonoBehaviour
 {
     /* 
      * Add this script to the "spikes"
      * 
-     * This is hardcoded and we can make it "better" later,
-     * but set Cube to be the cube that can combine with the spikes
-     * (This will be the one on top of the platform)
+     * To use this script:
      * 
-     * Cube must be named "Cube"
-     *    
-     * If the player comes into contact with a spike,
-     * the level will be reset
-     *    
-     * If the cube comes into contact with a spike,
-     * it will be moved back to its original position
+     * Add it to the "spike" object
+     * Cube = cube
+     * 
+     * Tag cubes/things that will fall and you want to respawn as "object"
+     * Tag the First Person Controller as "player"
+     * Tag enemies as "enemy"
     */
 
-    public Transform Cube;
-    Vector3 CubeStartPosition;
+    public GameObject Cube;
+    private Vector3 StartPosition;
 
-    void Start()
+    private void Start()
     {
-        CubeStartPosition = new Vector3(Cube.transform.position.x, Cube.transform.position.y, Cube.transform.position.z);
+        StartPosition = Cube.transform.position;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "FPSController" || other.gameObject.name == "RigidBodyFPSController")
+        switch (other.gameObject.tag)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        } 
-        else if(other.gameObject.name == "Cube")
-        {
-            Cube.transform.parent = null;
-            Cube.GetComponent<Rigidbody>().useGravity = true;
-            Cube.GetComponent<Rigidbody>().isKinematic = false;
-            other.gameObject.transform.position = CubeStartPosition;
+            case "player":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                break;
+            case "object":
+                other.transform.parent = null;
+                other.GetComponent<Rigidbody>().useGravity = true;
+                other.GetComponent<Rigidbody>().isKinematic = false;
+                other.transform.position = StartPosition;
+                break;
+            case "enemy":
+                Destroy(other.gameObject);
+                break;
         }
     }
 }
