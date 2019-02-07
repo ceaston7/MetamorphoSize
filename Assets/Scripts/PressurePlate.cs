@@ -1,47 +1,35 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
-
     /* 
      * This can be improved, but it is a prototype and we have to throw away any code we use soooo
      *    
-     * Collision event with either player or cube triggers bridge growth
+     * Collision event with either player or an object tagged "object" activates the bridge
      * Should disappear upon removal   
      * 
-     * How to use:
-     * 
-     * Set bridge size = (x,y,0)
-     * Position Z = center of pit
-     * Change whether we want the bridge extending on x or z axis: 
-     * change multipler location on line 38 to (multiplier,0,0)
+     * How to use;
      *    
      * Attach script to pressure plate
      * Bridge = bridge object
-     * Multiplier = length of bridge
      */
 
-
-    public Transform bridge;
-    public float multiplier;
-    private Vector3 originalBridge;
+    public GameObject Bridge;
 
     private void Start()
     {
-        originalBridge = bridge.transform.localScale;
+        Bridge.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "RigidBodyFPSController" || other.gameObject.name == "Cube")
+        if(other.tag == "player" || other.tag == "object")
         {
-            bridge.transform.localScale += new Vector3(0, 0, multiplier);
-            bridge.transform.position = bridge.transform.position + bridge.transform.forward;
+            Bridge.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-
-        bridge.transform.localScale = originalBridge;
+        Bridge.SetActive(false);
     }
 }
