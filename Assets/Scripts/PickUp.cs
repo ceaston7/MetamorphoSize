@@ -19,7 +19,6 @@ namespace OurGame
     {
         public Transform Hold;
         public Camera Cam;
-        private bool holding;
 
         private void Start()
         {
@@ -27,7 +26,25 @@ namespace OurGame
             GetComponent<Rigidbody>().useGravity = true;
         }
 
-        private void Update()
+				public void Pick()
+				{
+						Debug.Log("pickup");
+						GetComponent<Rigidbody>().useGravity = false;
+						GetComponent<Rigidbody>().isKinematic = true;
+						this.transform.position = Hold.position;
+						this.transform.parent = Hold;
+				}
+
+				public void Drop()
+				{
+						Debug.Log("drop");
+						this.transform.parent = null;
+						GetComponent<Rigidbody>().useGravity = true;
+						GetComponent<Rigidbody>().isKinematic = false;
+				}
+
+				/*
+        private void FixedUpdate()
         {
             RaycastHit hit;
             Ray ray = Cam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
@@ -35,13 +52,12 @@ namespace OurGame
             if (CrossPlatformInputManager.GetButtonDown("Fire3"))
             {
                 //If you're not holding the object, pick it up with Fire3
-                if (!holding && Physics.Raycast(ray, out hit, 3.0f) && hit.collider.tag == "object")
+                if (held)
                 {
                     GetComponent<Rigidbody>().useGravity = false;
                     GetComponent<Rigidbody>().isKinematic = true;
                     this.transform.position = Hold.position;
                     this.transform.parent = GameObject.FindWithTag("player").transform;
-                    holding = true;
                 }
                 //If you are holding the object, drop it with Fire3
                 else
@@ -53,5 +69,6 @@ namespace OurGame
                 }
             }
         }
-    }
+				*/
+		}
 }

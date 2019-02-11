@@ -7,10 +7,12 @@ using UnityEngine;
 public class PlayerControllerScale : MonoBehaviour
 {
 		public Camera cam;
+		private bool holding;
 
 		void Start()
 		{
 				cam = Camera.main;
+				holding = false;
 		}
 
 
@@ -43,5 +45,37 @@ public class PlayerControllerScale : MonoBehaviour
 								catch { }
 						}
 				}
+				else if(CrossPlatformInputManager.GetAxis("Fire3") != 0)
+				{
+						RaycastHit hit;
+						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
+
+						Debug.Log("hit null: " + hit.collider == null);
+
+						if (!holding && hit.collider != null)
+						{
+								try
+								{
+										hit.collider.gameObject.GetComponent<PickUp>().Pick();
+										StartCoroutine(WaitAfterPickup(true));
+								}
+								catch { }
+						}
+						else if(holding && hit.collider != null)
+						{
+								try
+								{
+										hit.collider.gameObject.GetComponent<PickUp>().Drop();
+										StartCoroutine(WaitAfterPickup(false));
+								}
+								catch { }
+						}
+				}
+		}
+
+		IEnumerator WaitAfterPickup(bool update)
+		{
+				yield return new WaitForSecondsRealtime(0.1f);
+				holding = update;
 		}
 }

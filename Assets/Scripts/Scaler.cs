@@ -6,11 +6,39 @@ namespace OurGame
 {
 		public class Scaler : MonoBehaviour
 		{
-				Vector3 scaleVector = new Vector3(1,1,1);
+				private Vector3 scaleWeight = new Vector3(1,1,1); //Ensures that objects scale uniformly
+				private int greatestDim; //Stores which of x, y, or z scale is largest
 				public float scaleFactor = 0.2f;
+
+				private Collision collisionData;
+
+				void Start()
+				{
+						float scaleSum = transform.localScale.x + transform.localScale.y + transform.localScale.z;
+
+						for (int i = 0; i < 3; i++)
+						{
+								scaleWeight[i] = transform.localScale[i] / scaleSum;
+						}
+
+						greatestDim = transform.localScale.x > transform.localScale.y ? 0 : 1;
+						greatestDim = transform.localScale[greatestDim] > transform.localScale.z ? greatestDim : 2;
+
+				}
+
 				public void scale(float growOrShrink)
 				{
-						gameObject.transform.localScale += (scaleVector * scaleFactor * gameObject.transform.localScale.x * growOrShrink * Time.deltaTime);
+						transform.localScale += (scaleWeight * scaleFactor * transform.localScale[greatestDim] * growOrShrink * Time.deltaTime);
 				}
+
+				/*
+				void OnCollisionStay(Collision collision)
+				{
+						foreach (ContactPoint contact in collision.contacts)
+						{
+								Debug.DrawRay(contact.point, contact.normal * 10, Color.white);
+						}
+				}
+				*/
 		}
 }

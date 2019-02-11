@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
-    /* 
+		/* 
      * This can be improved, but it is a prototype and we have to throw away any code we use soooo
      *    
      * Collision event with either player or an object tagged "object" activates the bridge
@@ -14,22 +14,33 @@ public class PressurePlate : MonoBehaviour
      * Bridge = bridge object
      */
 
-    public GameObject Bridge;
+		public IActivate activate;
+		public Material onMat;
+		public Material offMat;
+		private Renderer render;
+		private uint count; //Tracks how many objects are on top of plate
+
 
     private void Start()
     {
-        Bridge.SetActive(false);
+				activate.DeactivateMe();
+				render = GetComponent<Renderer>();
+				count = 0;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "player" || other.tag == "object")
-        {
-            Bridge.SetActive(true);
-        }
+				activate.ActivateMe();
+				render.material = onMat;
+				count++;
     }
     private void OnTriggerExit(Collider other)
     {
-        Bridge.SetActive(false);
+				count--;
+				if (count == 0)
+				{
+						activate.DeactivateMe();
+						render.material = offMat;
+				}
     }
 }

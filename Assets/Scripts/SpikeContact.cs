@@ -25,17 +25,17 @@ public class SpikeContact : MonoBehaviour
         StartPosition = Cube.transform.position;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
         {
-            case "player":
+            case "Player":
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "object":
                 other.transform.parent = null;
-                other.GetComponent<Rigidbody>().useGravity = true;
-                other.GetComponent<Rigidbody>().isKinematic = false;
+                other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 other.transform.position = StartPosition;
                 break;
             case "enemy":
