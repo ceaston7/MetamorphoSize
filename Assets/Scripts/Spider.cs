@@ -1,28 +1,27 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public class Spider : MonoBehaviour
 {
-    public Transform Player;
+    public GameObject Player;
     public int BridgeDistance;
     private Vector3 Position;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(Pace());
     }
 
     void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, Player.position) < BridgeDistance)
+        if (Vector3.Distance(transform.position, Player.transform.position) < BridgeDistance)
         {
             GetComponent<Rigidbody>().useGravity = true;
-            transform.LookAt(Player);
+            transform.LookAt(Player.transform);
             transform.position += transform.forward * 2 * Time.deltaTime;
         }
         else
@@ -53,7 +52,7 @@ public class Spider : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject == Player)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -64,9 +63,9 @@ public class Spider : MonoBehaviour
         GetComponent<Rigidbody>().useGravity = false;
 
         Vector3 pacer = Position;
-        pacer.x += .1f * Mathf.Sin(Time.time) * .5f;
+        pacer.z += .1f * Mathf.Sin(Time.time) * .2f;
         transform.position = pacer;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(.5f);
     }
 
 }
