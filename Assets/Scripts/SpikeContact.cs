@@ -32,13 +32,13 @@ public class SpikeContact : MonoBehaviour
             case "Player":
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
-            case "object":
+            case "Object":
                 other.transform.parent = null;
                 other.gameObject.GetComponent<Rigidbody>().useGravity = true;
                 other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 other.transform.position = StartPosition;
                 break;
-            case "enemy":
+            case "Enemy":
                 Destroy(other.gameObject);
                 break;
         }
