@@ -71,7 +71,11 @@ public class PlayerControllerScale : MonoBehaviour
 								catch { }
 						}
 				}
-		}
+				else if (CrossPlatformInputManager.GetAxis("Cancel") != 0)
+					{
+					    Application.Quit();
+					}
+				}
 
 		IEnumerator WaitAfterPickup(bool update)
 		{
