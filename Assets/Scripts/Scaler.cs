@@ -6,9 +6,9 @@ namespace OurGame
 {
 		public class Scaler : MonoBehaviour
 		{
+				private float scaleFactor = 0.5f;
 				private Vector3 scaleWeight = new Vector3(1,1,1); //Ensures that objects scale uniformly
 				private int greatestDim; //Stores which of x, y, or z scale is largest
-				public float scaleFactor = 0.2f;
 
 				private Collision collisionData;
 
