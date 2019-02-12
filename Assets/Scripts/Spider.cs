@@ -22,7 +22,7 @@ public class Spider : MonoBehaviour
         {
             GetComponent<Rigidbody>().useGravity = true;
             transform.LookAt(Player.transform);
-            transform.position += transform.forward * 2 * Time.deltaTime;
+            transform.position += transform.forward * 1 * Time.deltaTime;
         }
         else
         {
