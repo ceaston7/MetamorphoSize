@@ -18,12 +18,13 @@ namespace OurGame
     public class PickUp : MonoBehaviour
     {
         public Transform Hold;
-        public Camera Cam;
+        //public Camera Cam;
 
         private void Start()
         {
-            Cam = Camera.main;
+            //Cam = Camera.main;
             GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().isKinematic = false;
         }
 
 				public void Pick()
