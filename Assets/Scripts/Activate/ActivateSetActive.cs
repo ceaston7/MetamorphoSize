@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivateBridge : IActivate
+public class ActivateSetActive : IActivate
 {
 		override public void ActivateMe()
 		{

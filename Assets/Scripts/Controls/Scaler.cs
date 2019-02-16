@@ -30,15 +30,5 @@ namespace OurGame
 				{
 						transform.localScale += (scaleWeight * scaleFactor * transform.localScale[greatestDim] * growOrShrink * Time.deltaTime);
 				}
-
-				/*
-				void OnCollisionStay(Collision collision)
-				{
-						foreach (ContactPoint contact in collision.contacts)
-						{
-								Debug.DrawRay(contact.point, contact.normal * 10, Color.white);
-						}
-				}
-				*/
 		}
 }

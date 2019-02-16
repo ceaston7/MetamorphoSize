@@ -1,4 +1,5 @@
 using UnityEngine;
+using OurGame;
 
 public class PressurePlate : MonoBehaviour
 {
@@ -14,33 +15,68 @@ public class PressurePlate : MonoBehaviour
      * Bridge = bridge object
      */
 
-		public IActivate activate;
+		public IActivate[] activates;
 		public Material onMat;
 		public Material offMat;
+
+		public int requiredWeight = 0;
+		private int currentWeight = 0;
+
 		private Renderer render;
 		private uint count; //Tracks how many objects are on top of plate
 
 
     private void Start()
     {
-				activate.DeactivateMe();
+				foreach(IActivate activate in activates)
+				{
+						activate.DeactivateMe();
+				}
+				
 				render = GetComponent<Renderer>();
 				count = 0;
+				currentWeight = 0;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-				activate.ActivateMe();
-				render.material = onMat;
+				try
+				{
+						currentWeight += other.GetComponent<WeightTracker>().GetMyWeight();
+				}
+				catch { }
+
 				count++;
-    }
+				if (currentWeight >= requiredWeight)
+				{
+						foreach (IActivate activate in activates)
+						{
+								activate.ActivateMe();
+						}
+						render.material = onMat;
+				}
+		}
     private void OnTriggerExit(Collider other)
     {
-				count--;
-				if (count == 0)
+				try
 				{
-						activate.DeactivateMe();
+						currentWeight -= other.GetComponent<WeightTracker>().GetMyWeight();
+				}
+				catch { }
+
+				count--;
+				if (count == 0 || currentWeight < requiredWeight)
+				{
+						foreach (IActivate activate in activates)
+						{
+								activate.DeactivateMe();
+						}
 						render.material = offMat;
+				}
+
+				if (count < 0 || currentWeight < 0)
+				{
+						Debug.Log("Negative count or weight");
 				}
     }
 }

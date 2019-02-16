@@ -50,8 +50,6 @@ public class PlayerControllerScale : MonoBehaviour
 						RaycastHit hit;
 						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
 
-						Debug.Log("hit null: " + hit.collider == null);
-
 						if (!holding && hit.collider != null)
 						{
 								try
