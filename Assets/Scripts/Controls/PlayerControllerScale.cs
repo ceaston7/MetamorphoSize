@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Characters.FirstPerson;
 using OurGame;
 using UnityEngine;
 
@@ -8,11 +10,16 @@ public class PlayerControllerScale : MonoBehaviour
 {
 		public Camera cam;
 		private bool holding;
+		private float maxScale;
+		private float minScale;
 
 		void Start()
 		{
 				cam = Camera.main;
 				holding = false;
+
+				maxScale = 1.5F;
+				minScale = .5F;
 		}
 
 
@@ -69,6 +76,40 @@ public class PlayerControllerScale : MonoBehaviour
 								catch { }
 						}
 				}
+				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0)
+				{
+					RigidbodyFirstPersonController m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
+					Vector3 newScale = transform.localScale + new Vector3(.1F, .1F, .1F);
+					CapsuleCollider m_Capsule = GetComponent<CapsuleCollider>();
+					
+					if(SanityChecker(newScale))
+					{
+						transform.localScale = newScale;
+						m_RigidBody.advancedSettings.groundCheckDistance += .1F; 
+						m_Capsule.radius += .1f;
+					}
+					else
+					{
+						Debug.Log(newScale);
+					}
+				}
+				else if (CrossPlatformInputManager.GetAxis("Scale1") != 0)
+				{
+					RigidbodyFirstPersonController m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
+					Vector3 newScale = transform.localScale - new Vector3(.1F, .1F, .1F);
+					CapsuleCollider m_Capsule = GetComponent<CapsuleCollider>();
+					if(SanityChecker(newScale))
+					{
+						transform.localScale = newScale;
+						m_RigidBody.advancedSettings.groundCheckDistance += -.1F; 	
+						m_Capsule.radius += -.1f;
+
+					}
+					else
+					{
+						Debug.Log(newScale);
+					}
+				}
 				else if (CrossPlatformInputManager.GetAxis("Cancel") != 0)
 					{
 					    Application.Quit();
@@ -80,4 +121,21 @@ public class PlayerControllerScale : MonoBehaviour
 				yield return new WaitForSecondsRealtime(0.1f);
 				holding = update;
 		}
+		 public bool SanityChecker(Vector3 newScale)
+         {
+            if (newScale.x > maxScale)
+                return false;
+			else if (newScale.x < minScale)
+				return false;
+			else if (newScale.y > maxScale)
+				return false; 
+			else if (newScale.y < minScale)
+				return false;
+			else if (newScale.z > maxScale)
+				return false;
+			else if (newScale.z < minScale)
+				return false;
+			else
+				return true;
+         }
 }
