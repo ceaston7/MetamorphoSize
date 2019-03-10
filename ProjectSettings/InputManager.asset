@@ -311,7 +311,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Scale0
-    descriptiveName: 
+    descriptiveName: Grow
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: r
@@ -327,7 +327,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Scale1
-    descriptiveName: 
+    descriptiveName: Shrink
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: f
