@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using OurGame;
 
 public class PressurePlate : MonoBehaviour
@@ -52,6 +53,8 @@ public class PressurePlate : MonoBehaviour
 						foreach (IActivate activate in activates)
 						{
 								activate.ActivateMe();
+								NavMeshSurface mesh = activate.GetComponent<NavMeshSurface>();
+								mesh.BuildNavMesh();
 						}
 						render.material = onMat;
 				}
@@ -70,6 +73,8 @@ public class PressurePlate : MonoBehaviour
 						foreach (IActivate activate in activates)
 						{
 								activate.DeactivateMe();
+								NavMeshSurface mesh = activate.GetComponent<NavMeshSurface>();
+								mesh.BuildNavMesh();
 						}
 						render.material = offMat;
 				}
