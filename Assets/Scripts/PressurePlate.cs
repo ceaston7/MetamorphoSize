@@ -55,8 +55,6 @@ namespace OurGame
 								foreach (IActivate activate in activates)
 								{
 										activate.ActivateMe();
-										NavMeshSurface mesh = activate.GetComponent<NavMeshSurface>();
-										mesh.BuildNavMesh();
 								}
 								render.material = onMat;
 						}
@@ -75,8 +73,6 @@ namespace OurGame
 								foreach (IActivate activate in activates)
 								{
 										activate.DeactivateMe();
-										NavMeshSurface mesh = activate.GetComponent<NavMeshSurface>();
-										mesh.BuildNavMesh();
 								}
 								render.material = offMat;
 						}
