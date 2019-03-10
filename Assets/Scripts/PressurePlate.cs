@@ -42,7 +42,7 @@ public class PressurePlate : MonoBehaviour
     {
 				try
 				{
-						currentWeight += other.GetComponent<WeightTracker>().GetMyWeight();
+						currentWeight += other.GetComponent<CollisionTracker>().currentMass;
 				}
 				catch { }
 
@@ -60,7 +60,7 @@ public class PressurePlate : MonoBehaviour
     {
 				try
 				{
-						currentWeight -= other.GetComponent<WeightTracker>().GetMyWeight();
+						currentWeight -= other.GetComponent<CollisionTracker>().currentMass;
 				}
 				catch { }
 

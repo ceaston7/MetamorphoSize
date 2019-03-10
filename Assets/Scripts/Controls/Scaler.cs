@@ -9,8 +9,7 @@ namespace OurGame
 				private float scaleFactor = 0.5f;
 				private Vector3 scaleWeight = new Vector3(1,1,1); //Ensures that objects scale uniformly
 				private int greatestDim; //Stores which of x, y, or z scale is largest
-
-				private Collision collisionData;
+				public bool canGrow = true;
 
 				void Start()
 				{
@@ -28,7 +27,7 @@ namespace OurGame
 
 				public void scale(float growOrShrink)
 				{
-						transform.localScale += (scaleWeight * scaleFactor * transform.localScale[greatestDim] * growOrShrink * Time.deltaTime);
+						transform.localScale += (scaleWeight * scaleFactor * transform.localScale[greatestDim] * growOrShrink * Time.deltaTime) * (!canGrow && growOrShrink == 1 ? 0: 1);
 				}
 		}
 }

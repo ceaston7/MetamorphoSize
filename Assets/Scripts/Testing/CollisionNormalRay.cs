@@ -17,7 +17,7 @@ public class CollisionNormalRay : MonoBehaviour
 						Debug.DrawRay(contact.point, contact.normal * 10, color);
 				}
 		}
-		/*
+		
 		void OnCollisionStay(Collision collision)
 		{
 				print("Stay contacts: " + collision.GetContacts(collision.contacts));
@@ -27,7 +27,7 @@ public class CollisionNormalRay : MonoBehaviour
 						print(contact.normal);
 						Debug.DrawRay(contact.point, contact.normal * 10, color);
 				}
-		}*/
+		}
 
 		void OnCollisionExit(Collision collision)
 		{

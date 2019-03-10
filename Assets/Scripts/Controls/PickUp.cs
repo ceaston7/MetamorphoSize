@@ -25,6 +25,7 @@ namespace OurGame
             //Cam = Camera.main;
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<Rigidbody>().isKinematic = false;
+						Hold = GameObject.Find("Player/MainCamera/Hold").transform;
         }
 
 				public void Pick()

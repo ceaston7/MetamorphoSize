@@ -12,6 +12,7 @@ public class PlayerControllerScale : MonoBehaviour
 		private bool holding;
 		private float maxScale;
 		private float minScale;
+		private PlayerState playerState;
 
 		void Start()
 		{
@@ -20,12 +21,16 @@ public class PlayerControllerScale : MonoBehaviour
 
 				maxScale = 1.5F;
 				minScale = .5F;
+
+				playerState = GetComponent<PlayerState>();
+				playerState.haveTool[0] = true;
+				playerState.haveTool[1] = true;
 		}
 
 
 		void FixedUpdate()
 		{
-				if (CrossPlatformInputManager.GetAxis("Fire1") != 0)
+				if (CrossPlatformInputManager.GetAxis("Fire1") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
 				{
 						RaycastHit hit;
 						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 200);
@@ -39,7 +44,7 @@ public class PlayerControllerScale : MonoBehaviour
 								catch { }
 						}
 				}
-				else if (CrossPlatformInputManager.GetAxis("Fire2") != 0)
+				else if (CrossPlatformInputManager.GetAxis("Fire2") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
 				{
 						RaycastHit hit;
 						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 200);
@@ -76,7 +81,7 @@ public class PlayerControllerScale : MonoBehaviour
 								catch { }
 						}
 				}
-				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0)
+				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
 				{
 					RigidbodyFirstPersonController m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
 					Vector3 newScale = transform.localScale + new Vector3(.1F, .1F, .1F);
@@ -93,7 +98,7 @@ public class PlayerControllerScale : MonoBehaviour
 						Debug.Log(newScale);
 					}
 				}
-				else if (CrossPlatformInputManager.GetAxis("Scale1") != 0)
+				else if (CrossPlatformInputManager.GetAxis("Scale1") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
 				{
 					RigidbodyFirstPersonController m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
 					Vector3 newScale = transform.localScale - new Vector3(.1F, .1F, .1F);
