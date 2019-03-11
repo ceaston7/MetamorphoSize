@@ -13,6 +13,10 @@ public class PlayerControllerScale : MonoBehaviour
 		private float maxScale;
 		private float minScale;
 		private PlayerState playerState;
+		private float defaultRadius;
+		private float defaultGroundCheck;
+		RigidbodyFirstPersonController m_RigidBody;
+		CapsuleCollider m_Capsule;
 
 		void Start()
 		{
@@ -25,6 +29,10 @@ public class PlayerControllerScale : MonoBehaviour
 				playerState = GetComponent<PlayerState>();
 				playerState.haveTool[0] = true;
 				playerState.haveTool[1] = true;
+				m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
+				m_Capsule = GetComponent<CapsuleCollider>();
+				defaultRadius = m_Capsule.radius;
+				defaultGroundCheck = m_RigidBody.advancedSettings.groundCheckDistance;
 		}
 
 
@@ -83,9 +91,7 @@ public class PlayerControllerScale : MonoBehaviour
 				}
 				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
 				{
-					RigidbodyFirstPersonController m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
 					Vector3 newScale = transform.localScale + new Vector3(.1F, .1F, .1F);
-					CapsuleCollider m_Capsule = GetComponent<CapsuleCollider>();
 					
 					if(SanityChecker(newScale))
 					{
@@ -100,9 +106,7 @@ public class PlayerControllerScale : MonoBehaviour
 				}
 				else if (CrossPlatformInputManager.GetAxis("Scale1") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
 				{
-					RigidbodyFirstPersonController m_RigidBody = GetComponent<RigidbodyFirstPersonController>();
 					Vector3 newScale = transform.localScale - new Vector3(.1F, .1F, .1F);
-					CapsuleCollider m_Capsule = GetComponent<CapsuleCollider>();
 					if(SanityChecker(newScale))
 					{
 						transform.localScale = newScale;
@@ -114,6 +118,11 @@ public class PlayerControllerScale : MonoBehaviour
 					{
 						Debug.Log(newScale);
 					}
+				}
+				else if(CrossPlatformInputManager.GetAxis("Scale3") != 0){
+						transform.localScale = new Vector3(1f, 1f, 1f);
+						m_Capsule.radius = defaultRadius;
+						m_RigidBody.advancedSettings.groundCheckDistance = defaultGroundCheck;
 				}
 				else if (CrossPlatformInputManager.GetAxis("Cancel") != 0)
 					{

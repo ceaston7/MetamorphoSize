@@ -18,12 +18,12 @@ namespace OurGame
 								{
 										if (collided.ContainsKey(point.otherCollider.gameObject))
 										{
-												Debug.Log(point.otherCollider.gameObject.name + " already collided: " + collided[point.otherCollider.gameObject]);
+												//Debug.Log(point.otherCollider.gameObject.name + " already collided: " + collided[point.otherCollider.gameObject]);
 												collided[point.otherCollider.gameObject]++;
 										}
 										else
 										{
-												Debug.Log("Adding gameObject " + point.otherCollider.gameObject.name);
+												//Debug.Log("Adding gameObject " + point.otherCollider.gameObject.name);
 												collided.Add(point.otherCollider.gameObject, 1);
 												try
 												{
@@ -41,7 +41,7 @@ namespace OurGame
 						{
 								if (collided[collision.gameObject] == 1)
 								{
-										Debug.Log("Removing object " + collision.gameObject.name);
+										//Debug.Log("Removing object " + collision.gameObject.name);
 										collided.Remove(collision.gameObject);
 
 										try
@@ -53,7 +53,7 @@ namespace OurGame
 								else
 								{
 										collided[collision.gameObject]--;
-										Debug.Log("Subtracted, now " + collided[collision.gameObject]);
+										//Debug.Log("Subtracted, now " + collided[collision.gameObject]);
 								}
 						}
 				}
