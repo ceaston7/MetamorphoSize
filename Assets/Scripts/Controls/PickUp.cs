@@ -25,7 +25,7 @@ namespace OurGame
         {
             if (!held)
             {
-                Pick(control.cam, control.hand);
+                Pick(control.hand);
             }
             else
             {
@@ -35,10 +35,10 @@ namespace OurGame
             StartCoroutine(UpdateHolding());
         }
 
-        private void Pick(Camera cam, GameObject hand)
+        private void Pick(GameObject hand)
         {
             obj.transform.position = hand.transform.position;
-            obj.transform.localRotation = cam.transform.rotation;
+            obj.transform.localRotation = Camera.main.transform.rotation;
  
             FixedJoint joint = obj.gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = hand.GetComponent<Rigidbody>();
