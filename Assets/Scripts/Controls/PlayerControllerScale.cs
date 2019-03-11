@@ -66,7 +66,7 @@ public class PlayerControllerScale : MonoBehaviour
 						{
 								try
 								{
-                                        				hit.collider.gameObject.GetComponent<PickUp>().Move(this);
+                                        				hit.collider.gameObject.GetComponent<PickUp>().Move();
                                 				}
 								catch { }
 						}
