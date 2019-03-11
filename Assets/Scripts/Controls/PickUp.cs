@@ -35,14 +35,18 @@ namespace OurGame
 
         private void Pick()
         {
+            // Create a hand object and place it infront of the player
             if (hand == null)
             {
-                // Create a hand object and place it infront of the player
                 hand = new GameObject("Hand");
                 hand.transform.parent = Camera.main.transform;
                 GameObject player = Camera.main.transform.parent.gameObject;
-                hand.transform.position = player.transform.position + player.transform.forward * 2.5f + player.transform.up * 0.2f;
+                hand.transform.position = player.transform.position + player.transform.forward * 2.5f + player.transform.up * 0.1f;
+            }
 
+            //  Give the hand a rigid body
+            if(hand.GetComponent<Rigidbody>() == null)
+            {
                 Rigidbody body = hand.AddComponent<Rigidbody>();
                 body.isKinematic = true;
                 body.useGravity = false;
