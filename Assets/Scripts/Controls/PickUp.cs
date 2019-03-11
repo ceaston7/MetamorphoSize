@@ -1,74 +1,62 @@
-using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine;
+using System.Collections;
 
 namespace OurGame
 {
-
-    /* 
-     * To use:
-     * Select playercharacter, create child object "Hands"
-     * Add script to Cube
-     * Hold = drag child object "Hands"
-     * Cam = drag playercharacter camera
-     * Tag Cube as "object"
-     * 
-     * Key code is Fire3, we are setting it to 'e'
-     */
-
     public class PickUp : MonoBehaviour
     {
-        public Transform Hold;
-        //public Camera Cam;
+        private GameObject obj;
+        private bool held;
 
         private void Start()
         {
-            //Cam = Camera.main;
-            GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().isKinematic = false;
-						Hold = GameObject.Find("Player/MainCamera/Hold").transform;
+            obj = transform.gameObject;
         }
 
-				public void Pick()
-				{
-						GetComponent<Rigidbody>().useGravity = false;
-						GetComponent<Rigidbody>().isKinematic = true;
-						this.transform.position = Hold.position;
-						this.transform.parent = Hold;
-				}
-
-				public void Drop()
-				{
-						this.transform.parent = null;
-						GetComponent<Rigidbody>().useGravity = true;
-						GetComponent<Rigidbody>().isKinematic = false;
-				}
-
-				/*
-        private void FixedUpdate()
+        private void Update()
         {
-            RaycastHit hit;
-            Ray ray = Cam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-
-            if (CrossPlatformInputManager.GetButtonDown("Fire3"))
+            if(obj.GetComponent<FixedJoint>() == null && held)
             {
-                //If you're not holding the object, pick it up with Fire3
-                if (held)
-                {
-                    GetComponent<Rigidbody>().useGravity = false;
-                    GetComponent<Rigidbody>().isKinematic = true;
-                    this.transform.position = Hold.position;
-                    this.transform.parent = GameObject.FindWithTag("player").transform;
-                }
-                //If you are holding the object, drop it with Fire3
-                else
-                {
-                    this.transform.parent = null;
-                    GetComponent<Rigidbody>().useGravity = true;
-                    GetComponent<Rigidbody>().isKinematic = false;
-                    holding = false;
-                }
+                held = false;
             }
         }
-				*/
-		}
+
+        public void Move(PlayerControllerScale control)
+        {
+            if (!held)
+            {
+                Pick(control.cam, control.hand);
+            }
+            else
+            {
+                Drop();
+            }
+
+            StartCoroutine(UpdateHolding());
+        }
+
+        private void Pick(Camera cam, GameObject hand)
+        {
+            obj.transform.position = hand.transform.position;
+            obj.transform.localRotation = cam.transform.rotation;
+ 
+            FixedJoint joint = obj.gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = hand.GetComponent<Rigidbody>();
+            joint.breakForce = 10000f;
+        }
+
+        private void Drop()
+        {
+            Destroy(obj.GetComponent<FixedJoint>());
+            obj.transform.parent = null;
+            obj.transform.localRotation = transform.rotation;
+
+        }
+
+        IEnumerator UpdateHolding()
+        {
+            held = !held;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
 }
