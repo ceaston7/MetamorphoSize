@@ -9,10 +9,10 @@ using UnityEngine;
 public class PlayerControllerScale : MonoBehaviour
 {
 		public Camera cam;
-		private bool holding;
 		private float maxScale;
 		private float minScale;
 		private PlayerState playerState;
+        	public GameObject hand;
 
 		void Start()
 		{
@@ -62,22 +62,12 @@ public class PlayerControllerScale : MonoBehaviour
 						RaycastHit hit;
 						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
 
-						if (!holding && hit.collider != null)
+						if (hit.collider != null)
 						{
 								try
 								{
-										hit.collider.gameObject.GetComponent<PickUp>().Pick();
-										StartCoroutine(WaitAfterPickup(true));
-								}
-								catch { }
-						}
-						else if(holding && hit.collider != null)
-						{
-								try
-								{
-										hit.collider.gameObject.GetComponent<PickUp>().Drop();
-										StartCoroutine(WaitAfterPickup(false));
-								}
+                                        				hit.collider.gameObject.GetComponent<PickUp>().Move(this);
+                                				}
 								catch { }
 						}
 				}
@@ -121,11 +111,6 @@ public class PlayerControllerScale : MonoBehaviour
 					}
 				}
 
-		IEnumerator WaitAfterPickup(bool update)
-		{
-				yield return new WaitForSecondsRealtime(0.1f);
-				holding = update;
-		}
 		 public bool SanityChecker(Vector3 newScale)
          {
             if (newScale.x > maxScale)
