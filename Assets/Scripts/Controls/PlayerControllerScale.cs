@@ -16,12 +16,10 @@ public class PlayerControllerScale : MonoBehaviour
 		private float defaultGroundCheck;
 		RigidbodyFirstPersonController m_RigidBody;
 		CapsuleCollider m_Capsule;
-    public GameObject hand;
 
 		void Start()
 		{
 				cam = Camera.main;
-				holding = false;
 
 				maxScale = 1.5F;
 				minScale = .5F;
