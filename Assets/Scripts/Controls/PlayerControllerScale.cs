@@ -16,7 +16,6 @@ public class PlayerControllerScale : MonoBehaviour
 		private float defaultGroundCheck;
 		RigidbodyFirstPersonController m_RigidBody;
 		CapsuleCollider m_Capsule;
-    public GameObject hand;
 
 		void Start()
 		{
