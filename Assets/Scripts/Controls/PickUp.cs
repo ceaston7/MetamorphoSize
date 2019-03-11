@@ -1,74 +1,82 @@
-using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine;
+using System.Collections;
 
 namespace OurGame
 {
-
-    /* 
-     * To use:
-     * Select playercharacter, create child object "Hands"
-     * Add script to Cube
-     * Hold = drag child object "Hands"
-     * Cam = drag playercharacter camera
-     * Tag Cube as "object"
-     * 
-     * Key code is Fire3, we are setting it to 'e'
-     */
-
     public class PickUp : MonoBehaviour
     {
-        public Transform Hold;
-        //public Camera Cam;
+        private bool held;
+        private GameObject hand;
 
-        private void Start()
+        private void Update()
         {
-            //Cam = Camera.main;
-            GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().isKinematic = false;
-						Hold = GameObject.Find("Player/MainCamera/Hold").transform;
-        }
-
-				public void Pick()
-				{
-						GetComponent<Rigidbody>().useGravity = false;
-						GetComponent<Rigidbody>().isKinematic = true;
-						this.transform.position = Hold.position;
-						this.transform.parent = Hold;
-				}
-
-				public void Drop()
-				{
-						this.transform.parent = null;
-						GetComponent<Rigidbody>().useGravity = true;
-						GetComponent<Rigidbody>().isKinematic = false;
-				}
-
-				/*
-        private void FixedUpdate()
-        {
-            RaycastHit hit;
-            Ray ray = Cam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-
-            if (CrossPlatformInputManager.GetButtonDown("Fire3"))
+            // If the object collides with something and breaks the joint
+            // update the status of it being held and destroy hand.
+            if(gameObject.GetComponent<FixedJoint>() == null && held)
             {
-                //If you're not holding the object, pick it up with Fire3
-                if (held)
-                {
-                    GetComponent<Rigidbody>().useGravity = false;
-                    GetComponent<Rigidbody>().isKinematic = true;
-                    this.transform.position = Hold.position;
-                    this.transform.parent = GameObject.FindWithTag("player").transform;
-                }
-                //If you are holding the object, drop it with Fire3
-                else
-                {
-                    this.transform.parent = null;
-                    GetComponent<Rigidbody>().useGravity = true;
-                    GetComponent<Rigidbody>().isKinematic = false;
-                    holding = false;
-                }
+                Destroy(hand);
+                transform.gameObject.transform.parent = null;
+                StartCoroutine(UpdateHolding(false));
             }
         }
-				*/
-		}
+
+        // Helper method to either pick up or drop object
+        public void Move()
+        {
+            if (!held)
+            {
+                Pick();
+            }
+            else
+            {
+                Drop();
+            }
+        }
+
+        private void Pick()
+        {
+            if (hand == null)
+            {
+                // Create a hand object and place it infront of the player
+                hand = new GameObject("Hand");
+                hand.transform.parent = Camera.main.transform;
+                GameObject player = Camera.main.transform.parent.gameObject;
+                hand.transform.position = player.transform.position + player.transform.forward * 2.5f + player.transform.up * 0.2f;
+
+                Rigidbody body = hand.AddComponent<Rigidbody>();
+                body.isKinematic = true;
+                body.useGravity = false;
+            }
+
+            // Move object into hand
+            gameObject.transform.position = hand.transform.position;
+            gameObject.transform.localRotation = Camera.main.transform.rotation;
+            gameObject.transform.SetParent(hand.transform);
+ 
+            // Give object a FixedJoint to maintain physics
+            // Break force for wall collisions. Sensitivity can be edited (or removed entirely).
+            FixedJoint joint = transform.gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = hand.GetComponent<Rigidbody>();
+            joint.breakForce = 10000f;
+
+            StartCoroutine(UpdateHolding(true));
+        }
+
+        private void Drop()
+        {
+            //Remove object from hand and destroy the joint/hand
+            gameObject.transform.parent = null;
+            Destroy(transform.gameObject.GetComponent<FixedJoint>());
+            Destroy(hand);
+
+            StartCoroutine(UpdateHolding(false));
+
+        }
+
+        IEnumerator UpdateHolding(bool status)
+        {
+            yield return new WaitForSeconds(0.5f);
+            held = status;
+        }
+    }
 }
