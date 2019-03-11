@@ -20,7 +20,6 @@ public class PlayerControllerScale : MonoBehaviour
 		void Start()
 		{
 				cam = Camera.main;
-				holding = false;
 
 				maxScale = 1.5F;
 				minScale = .5F;
