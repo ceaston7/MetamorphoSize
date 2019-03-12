@@ -41,7 +41,7 @@ namespace OurGame
                 hand = new GameObject("Hand");
                 hand.transform.parent = Camera.main.transform;
                 GameObject player = Camera.main.transform.parent.gameObject;
-                hand.transform.position = player.transform.position + player.transform.forward * 2.5f + player.transform.up * 0.1f;
+                hand.transform.position = player.transform.position + player.transform.forward * 2.5f;
             }
 
             //  Give the hand a rigid body
