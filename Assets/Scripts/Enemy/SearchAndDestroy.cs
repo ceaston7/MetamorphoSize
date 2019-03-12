@@ -19,6 +19,7 @@ namespace OurGame
 				void Start()
 				{
 						agent = GetComponent<NavMeshAgent>();
+						agent.updateUpAxis = false;
 						targets = GameObject.FindGameObjectsWithTag("Player");
 						// Assumes there is only one Player Object in the game. This can also be a public variable we assign if we prefer.
 						goal = targets[0].transform;
