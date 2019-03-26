@@ -6,6 +6,8 @@ TagManager:
   tags:
   - object
   - Scaleable
+  - HidingSpot
+  - PowerUp
   layers:
   - Default
   - TransparentFX

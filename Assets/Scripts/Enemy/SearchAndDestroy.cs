@@ -8,22 +8,34 @@ namespace OurGame
 {
 		public class SearchAndDestroy : MonoBehaviour
 		{
+				public float fear_scale;
 
+				public Transform hiding_spot;
 				private Transform goal;
 
 				private GameObject[] targets;
 
+				private GameObject[] hiding_spots;
+
 				private float distToGround;
 
 				private NavMeshAgent agent;
+
 				void Start()
 				{
 						agent = GetComponent<NavMeshAgent>();
 						agent.updateUpAxis = false;
 						targets = GameObject.FindGameObjectsWithTag("Player");
+						hiding_spots = GameObject.FindGameObjectsWithTag("HidingSpot");
+						if (!hiding_spot)
+						{
+							hiding_spot = hiding_spots[0].transform;
+						}
 						// Assumes there is only one Player Object in the game. This can also be a public variable we assign if we prefer.
 						goal = targets[0].transform;
 						agent.destination = goal.position;
+						// These are subject to change
+						fear_scale = 1.5F;
 				}
 
 				void FixedUpdate()
@@ -36,9 +48,13 @@ namespace OurGame
 								rigid_body.isKinematic = false;
 								rigid_body.AddForce(0, 0, -1f);
 						}
-						else if (IsGrounded())
+						else if (IsGrounded() && (goal.localScale[0] < fear_scale))
 						{
-								agent.destination = goal.position;
+							agent.destination = goal.position;
+						}
+						else if (IsGrounded() && (goal.localScale[0] > fear_scale))
+						{
+							agent.destination = hiding_spot.transform.position;
 						}
 						else
 						{
