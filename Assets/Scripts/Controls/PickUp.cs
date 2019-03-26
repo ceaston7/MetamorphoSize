@@ -8,54 +8,63 @@ namespace OurGame
         private bool held;
         private GameObject hand;
 
+        private void Start()
+        {
+            if(Camera.main.transform.Find("Hand").gameObject)
+            {
+                hand = Camera.main.transform.Find("Hand").gameObject;
+            }
+            else
+            {
+                Vector3 location = Camera.main.transform.position;
+                hand = new GameObject("Hand");
+                hand.transform.parent = Camera.main.transform;
+                GameObject player = Camera.main.transform.parent.gameObject;
+                hand.transform.position = new Vector3(location.x, location.y + .5f, location.z + 3);
+            }
+
+            if (hand.GetComponent<Rigidbody>() == null)
+            {
+                // Give hand a rigidbody
+                Rigidbody body = hand.AddComponent<Rigidbody>();
+                body.isKinematic = true;
+                body.useGravity = false;
+            }
+        }
+
         private void Update()
         {
             // If the object collides with something and breaks the joint
             // update the status of it being held and destroy hand.
-            if(gameObject.GetComponent<FixedJoint>() == null && held)
+            if(gameObject.GetComponent<FixedJoint>() == null && hand.transform.childCount > 0)
             {
-                Destroy(hand);
-                transform.gameObject.transform.parent = null;
-                StartCoroutine(UpdateHolding(false));
+                gameObject.transform.parent = null;
+                held = false;
             }
         }
 
         // Helper method to either pick up or drop object
         public void Move()
         {
-            if (!held)
+            Debug.Log(held);
+            if(!held)
             {
+                Debug.Log("Pick");
                 Pick();
             }
             else
             {
+                Debug.Log("Drop");
                 Drop();
             }
         }
 
         private void Pick()
         {
-            // Create a hand object and place it infront of the player
-            if (hand == null)
-            {
-                hand = new GameObject("Hand");
-                hand.transform.parent = Camera.main.transform;
-                GameObject player = Camera.main.transform.parent.gameObject;
-                hand.transform.position = player.transform.position + player.transform.forward * 2.5f;
-            }
-
-            //  Give the hand a rigid body
-            if(hand.GetComponent<Rigidbody>() == null)
-            {
-                Rigidbody body = hand.AddComponent<Rigidbody>();
-                body.isKinematic = true;
-                body.useGravity = false;
-            }
-
             // Move object into hand
-            gameObject.transform.position = hand.transform.position;
-            gameObject.transform.localRotation = Camera.main.transform.rotation;
-            gameObject.transform.SetParent(hand.transform);
+            transform.position = hand.transform.position;
+            transform.localRotation = Camera.main.transform.rotation;
+            transform.parent = hand.transform;
  
             // Give object a FixedJoint to maintain physics
             // Break force for wall collisions. Sensitivity can be edited (or removed entirely).
@@ -63,24 +72,16 @@ namespace OurGame
             joint.connectedBody = hand.GetComponent<Rigidbody>();
             joint.breakForce = 10000f;
 
-            StartCoroutine(UpdateHolding(true));
+            held = true;
         }
 
         private void Drop()
         {
             //Remove object from hand and destroy the joint/hand
             gameObject.transform.parent = null;
-            Destroy(transform.gameObject.GetComponent<FixedJoint>());
-            Destroy(hand);
+            Destroy(gameObject.GetComponent<FixedJoint>());
 
-            StartCoroutine(UpdateHolding(false));
-
-        }
-
-        IEnumerator UpdateHolding(bool status)
-        {
-            yield return new WaitForSeconds(0.5f);
-            held = status;
+            held = false;
         }
     }
 }
