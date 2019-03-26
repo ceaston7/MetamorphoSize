@@ -77,12 +77,9 @@ public class PlayerControllerScale : MonoBehaviour
 						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
 
 						if (hit.collider != null)
-						{
-								try
-								{
-                                    hit.collider.gameObject.GetComponent<PickUp>().Move();     				
-								}
-								catch { }
+						{	
+                                        		hit.collider.gameObject.GetComponent<PickUp>().Move();
+                                        		StartCoroutine(Wait());
 						}
 				}
 				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
@@ -182,4 +179,8 @@ public class PlayerControllerScale : MonoBehaviour
 			else
 				return true;
          }
+	     private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2.5f);
+    }
 }
