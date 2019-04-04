@@ -9,12 +9,13 @@ namespace OurGame
 		public class TriggerAI : MonoBehaviour
 		{
 				public NavMeshAgent agent;
-				public SearchAndDestroy script;
+				public SearchAndDestroy script1;
+				public Resize script2;
 
 				public void OnTriggerEnter()
 				{
 						agent.enabled = true;
-						script.enabled = true;
+						script2.enabled = true;
 				}
 		}
 }
