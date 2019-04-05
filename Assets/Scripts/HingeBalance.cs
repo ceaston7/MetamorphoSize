@@ -6,13 +6,14 @@ using OurGame;
 namespace OurGame {
 		public class HingeBalance : MonoBehaviour
 		{
-				public GameObject[] platforms;
-				// Update is called once per frame
-				void FixedUpdate()
-				{
-						foreach(Transform t in gameObject.GetComponentsInChildren<Transform>()){
-								t.rotation.SetLookRotation(t.forward, Vector3.up);
-						}
+				void Start(){
+						HingeJoint hinge = GetComponents<HingeJoint>()[0];
+						JointLimits limits = new JointLimits();
+						Debug.Log(transform.rotation.eulerAngles.x);
+						limits.min = -90.0f - transform.rotation.eulerAngles.x;
+						limits.max = 90.0f - transform.rotation.eulerAngles.x;
+						hinge.limits = limits;
+						hinge.useLimits = true;
 				}
 		}
 }

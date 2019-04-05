@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4217833983006005283}
   - component: {fileID: 1962095121215898679}
   m_Layer: 0
-  m_Name: Green_Crate
+  m_Name: 2BaseMCrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: a661f0aa18c46a14dad423fe846a1a5b, type: 3}
 --- !u!114 &702713687747270410

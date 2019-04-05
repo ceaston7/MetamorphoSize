@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9217423891795985362}
   - component: {fileID: 351439894492035080}
   m_Layer: 0
-  m_Name: Pink_Crate
+  m_Name: 3BaseHCrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 7cad2ffe25b14cb438a4f83586bf4ca6, type: 3}
 --- !u!114 &5154838329438499502

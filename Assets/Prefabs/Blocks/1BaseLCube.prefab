@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 790356325138011974}
   - component: {fileID: 8183719147001345922}
   - component: {fileID: 3734390503199424981}
+  - component: {fileID: 7359254898123896716}
   m_Layer: 0
-  m_Name: Yellow_Crate
+  m_Name: 1BaseLCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,3 +124,17 @@ MonoBehaviour:
   baseMass: 3
   currentMass: 0
   isScalable: 0
+--- !u!64 &7359254898123896716
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641669306050823807}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 99541df6eadf715449a8c83cad626bd6, type: 3}
