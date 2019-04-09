@@ -78,8 +78,9 @@ public class PlayerControllerScale : MonoBehaviour
 
 						if (hit.collider != null)
 						{	
-                                        		hit.collider.gameObject.GetComponent<PickUp>().Move();
-                                        		StartCoroutine(Wait());
+                                        		//hit.collider.gameObject.GetComponent<PickUp>().Move();
+                                        		//StartCoroutine(Wait());
+                                        		StartCoroutine(Move(hit.collider.gameObject));
 						}
 				}
 				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
@@ -179,8 +180,8 @@ public class PlayerControllerScale : MonoBehaviour
 			else
 				return true;
          }
-	     private IEnumerator Wait()
+    private IEnumerator Move(GameObject item)
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return StartCoroutine(item.GetComponent<PickUp>().Move());
     }
 }
