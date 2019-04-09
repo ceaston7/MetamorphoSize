@@ -1,25 +1,38 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectState : MonoBehaviour
+namespace OurGame
 {
-    private Vector3 StartLoc;
-    private Vector3 StartSize;
-
-    private void Start()
+    public class ObjectState : MonoBehaviour
     {
-        StartLoc = transform.position;
-        StartSize = GetComponent<Renderer>().bounds.size;
-    }
+        public bool UpdatePosition;
+        private Vector3 SpawnLoc;
+        private Vector3 SpawnSize;
 
-    public Vector3 getStartLocation()
-    {
-        return StartLoc;
-    }
+        private void Start()
+        {
+            SpawnLoc = transform.position;
+            SpawnSize = GetComponent<Renderer>().bounds.size;
+        }
 
-    public Vector3 getStartSize()
-    {
-        return StartSize;
+        public Vector3 GetSpawnLocation()
+        {
+            return SpawnLoc;
+        }
+
+        public Vector3 GetSpawnSize()
+        {
+            return SpawnSize;
+        }
+
+        public void SetSpawn()
+        {
+            if(UpdatePosition)
+            {
+                SpawnLoc = transform.position;
+                SpawnSize = GetComponent<Renderer>().bounds.size;
+            }
+        }
     }
 }
