@@ -44,18 +44,19 @@ namespace OurGame
         }
 
         // Helper method to either pick up or drop object
-        public void Move()
+        public IEnumerator Move()
         {
-            Debug.Log(held);
-            if(!held)
+            if (!held)
             {
-                Debug.Log("Pick");
                 Pick();
+                while (!held)
+                    yield return null;
             }
             else
             {
-                Debug.Log("Drop");
                 Drop();
+                while (held)
+                    yield return null;
             }
         }
 
