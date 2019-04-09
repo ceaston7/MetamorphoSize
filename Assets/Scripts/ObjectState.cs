@@ -6,7 +6,7 @@ namespace OurGame
 {
     public class ObjectState : MonoBehaviour
     {
-        public bool UpdatePosition;
+        public bool KeepPosition;
         private Vector3 SpawnLoc;
         private Vector3 SpawnSize;
 
@@ -27,8 +27,9 @@ namespace OurGame
         }
 
         public void SetSpawn()
-        {
-            if(UpdatePosition)
+        { 
+
+            if(!KeepPosition)
             {
                 SpawnLoc = transform.position;
                 SpawnSize = GetComponent<Renderer>().bounds.size;
@@ -36,3 +37,4 @@ namespace OurGame
         }
     }
 }
+
