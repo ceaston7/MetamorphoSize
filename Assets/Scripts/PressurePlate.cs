@@ -23,7 +23,7 @@ namespace OurGame
 				public Material offMat;
 
 				public int requiredWeight = 0;
-				private int currentWeight = 0;
+				public int currentWeight = 0;
 
 				private Renderer render;
 				private uint count; //Tracks how many objects are on top of plate
