@@ -16,6 +16,7 @@ public class PlayerControllerScale : MonoBehaviour
 		public float defaultGroundCheck;
 		public RigidbodyFirstPersonController m_RigidBody;
 		public CapsuleCollider m_Capsule;
+		private bool inAction;
 
 		public float defaultHeight;
 
@@ -71,16 +72,27 @@ public class PlayerControllerScale : MonoBehaviour
 								catch { }
 						}
 				}
-				else if(CrossPlatformInputManager.GetAxis("Fire3") != 0)
+				else if(CrossPlatformInputManager.GetAxis("Fire3") != 0 && !inAction)
 				{
 						RaycastHit hit;
 						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
 
-						if (hit.collider != null)
-						{	
-                                        		//hit.collider.gameObject.GetComponent<PickUp>().Move();
-                                        		//StartCoroutine(Wait());
-                                        		StartCoroutine(Move(hit.collider.gameObject));
+						if (cam.transform.Find("Hand").gameObject.transform.childCount > 0)
+            					{
+							inAction = true;
+							GameObject obj = cam.transform.Find("Hand").GetChild(0).gameObject;
+							obj.GetComponent<PickUp>().Move();
+							StartCoroutine(Action());
+						}
+						else if (hit.collider != null)
+						{
+							try
+                					{
+                    						inAction = true;
+                    						hit.collider.GetComponent<PickUp>().Move();
+                    						StartCoroutine(Action());
+                                			}
+								catch { }
 						}
 				}
 				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
@@ -152,7 +164,12 @@ public class PlayerControllerScale : MonoBehaviour
 					{
 					    Application.Quit();
 					}
+					
+				 if(CrossPlatformInputManager.GetAxis("Fire3") == 0)
+				{
+				    inAction = false;
 				}
+			}
 
 		void OnCollisionEnter(Collision collision)
 		{
@@ -180,8 +197,9 @@ public class PlayerControllerScale : MonoBehaviour
 			else
 				return true;
          }
-    private IEnumerator Move(GameObject item)
+    private IEnumerator Action()
     {
-        yield return StartCoroutine(item.GetComponent<PickUp>().Move());
+        while (inAction)
+            yield return null;
     }
 }
