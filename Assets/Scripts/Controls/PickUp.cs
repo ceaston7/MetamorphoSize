@@ -7,19 +7,21 @@ namespace OurGame
     {
         private bool held;
         private GameObject hand;
+        private Transform cam;
 
         private void Start()
         {
-            if(Camera.main.transform.Find("Hand").gameObject)
+            cam = Camera.main.transform;
+            if(cam.Find("Hand").gameObject)
             {
-                hand = Camera.main.transform.Find("Hand").gameObject;
+                hand = cam.Find("Hand").gameObject;
             }
             else
             {
-                Vector3 location = Camera.main.transform.position;
+                Vector3 location = cam.position;
                 hand = new GameObject("Hand");
-                hand.transform.parent = Camera.main.transform;
-                GameObject player = Camera.main.transform.parent.gameObject;
+                hand.transform.parent = cam;
+                GameObject player = cam.parent.gameObject;
                 hand.transform.position = new Vector3(location.x, location.y + .5f, location.z + 3);
             }
 
@@ -43,20 +45,15 @@ namespace OurGame
             }
         }
 
-        // Helper method to either pick up or drop object
-        public IEnumerator Move()
+        public void Move()
         {
             if (!held)
             {
                 Pick();
-                while (!held)
-                    yield return null;
             }
-            else
+            else if (held)
             {
                 Drop();
-                while (held)
-                    yield return null;
             }
         }
 
@@ -64,7 +61,7 @@ namespace OurGame
         {
             // Move object into hand
             transform.position = hand.transform.position;
-            transform.localRotation = Camera.main.transform.rotation;
+            transform.localRotation = cam.rotation;
             transform.parent = hand.transform;
  
             // Give object a FixedJoint to maintain physics
