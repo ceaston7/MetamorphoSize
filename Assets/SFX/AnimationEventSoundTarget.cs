@@ -8,6 +8,7 @@ public class AnimationEventSoundTarget : MonoBehaviour
 		public AudioClip clip;
 
     public void PlaySound(){
+				Debug.Log("playing sound");
 				source.PlayOneShot(clip);
 		}
 }
