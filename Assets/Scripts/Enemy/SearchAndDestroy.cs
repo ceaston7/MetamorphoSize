@@ -25,6 +25,7 @@ namespace OurGame
 				{
 						agent = GetComponent<NavMeshAgent>();
 						agent.updateUpAxis = false;
+						agent.enabled = true;
 						targets = GameObject.FindGameObjectsWithTag("Player");
 						hiding_spots = GameObject.FindGameObjectsWithTag("HidingSpot");
 						if (!hiding_spot)
@@ -40,8 +41,9 @@ namespace OurGame
 
 				void FixedUpdate()
 				{
-						if (!IsGrounded() && agent.enabled)
+						if (IsGrounded() == false && agent.enabled)
 						{
+								Debug.Log("Am I Grounded?: " + IsGrounded());
 								agent.enabled = false;
 								Rigidbody rigid_body = GetComponent<Rigidbody>();
 								rigid_body.useGravity = true;
@@ -50,16 +52,25 @@ namespace OurGame
 						}
 						else if (IsGrounded() && (goal.localScale[0] < fear_scale))
 						{
+							Debug.Log("Am I Grounded?: " + IsGrounded());							
 							agent.destination = goal.position;
 						}
 						else if (IsGrounded() && (goal.localScale[0] > fear_scale))
 						{
 							agent.destination = hiding_spot.transform.position;
 						}
+						else if(IsGrounded() && agent.enabled == false)
+						{
+							agent.enabled = true;
+							Rigidbody rigid_body = GetComponent<Rigidbody>();
+							rigid_body.useGravity = false;
+							rigid_body.isKinematic = true;
+							rigid_body.AddForce(0, 0, -1f);
+						}
 						else
 						{
-								Rigidbody rigid_body = GetComponent<Rigidbody>();
-								rigid_body.AddForce(0, 0, -1f);
+							Rigidbody rigid_body = GetComponent<Rigidbody>();
+							rigid_body.AddForce(0, 0, -1f);
 						}
 				}
 
@@ -72,7 +83,7 @@ namespace OurGame
 				{
 						if (collision.gameObject.tag == "Player")
 						{
-								SceneManager.LoadScene("VerticalSlice");
+								SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 						}
 				}
 		}

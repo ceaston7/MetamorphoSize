@@ -14,8 +14,17 @@ namespace OurGame
 
 				public void OnTriggerEnter()
 				{
+					if(script1 != null)
+					{
+						agent.enabled = true;
+						script1.enabled = true;
+					}
+					else
+					{
 						agent.enabled = true;
 						script2.enabled = true;
+					}
+
 				}
 		}
 }
