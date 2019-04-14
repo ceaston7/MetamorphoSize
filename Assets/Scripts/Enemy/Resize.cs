@@ -4,6 +4,7 @@
     using UnityEngine.AI;
     using System.Collections;
     using System;
+    using System.Collections.Generic;
     
     public class Resize : MonoBehaviour {
 
@@ -12,11 +13,13 @@
        private float distToGround;
 
        public GameObject target;
+       public Transform station;
 
        private RaycastHit hit;
        private GameObject proposed_target;
 
        private GameObject[] scaleables;
+       private List<GameObject> possibleTargets;
        
        private NavMeshAgent agent;
 
@@ -32,6 +35,8 @@
         //   agent.updateUpAxis = false;
           scaleables = GameObject.FindGameObjectsWithTag("Scaleable");
           target = null; 
+          possibleTargets = new List<GameObject>();
+          station = GetComponent<Transform>();
           ticker = 0;
           // There should only ever be one player object, thus fetching this tag should return 1D array.
           player = GameObject.FindGameObjectsWithTag("Player");
@@ -51,7 +56,19 @@
            }
            else if (IsGrounded())
            {
-                for (int i = 0; i < scaleables.Length; i++)
+                if (player[0].transform.localScale[0] != 1)
+                {
+                    //Debug.Log("Priority Target: Player Resize Detected!");
+                    agent.destination = player[0].transform.position;
+                    target = player[0];
+                }
+                else if (ticker > 100)
+                {
+                    possibleTargets = ComposeA(scaleables);
+                    ticker = 0;
+                }
+
+                for (int i = 1; i <= possibleTargets.Count; i++)
                 {
                     //Debug.Log(scaleables);
                     // Player is always priority
@@ -62,17 +79,42 @@
                         agent.destination = player[0].transform.position;
                         target = player[0];
                     }
-                    else if (scaleables[i].GetComponent<Scaler>().isScaled)
+                    else if (possibleTargets[possibleTargets.Count - i].GetComponent<Scaler>().isScaled)
                     {
-                        //Debug.Log("Setting Target.");
-                        if (ticker > 4)
+                        Debug.Log("Setting Target.");
+                        if(target == null)
                         {
-                            quickSort(scaleables, 0, scaleables.Length-1);
-                            ticker = 0;
+                            target = possibleTargets[possibleTargets.Count-i];
+                            agent.destination = target.transform.position;
                         }
-                        target = scaleables[scaleables.Length-1];
-                        agent.destination = target.transform.position;
-                        agent.destination = scaleables[i].transform.position;
+                        else if (target.tag == "Scaleable")
+                        {
+                            if (target.GetComponent<Scaler>().isScaled == false)
+                            {
+                                target = possibleTargets[possibleTargets.Count-i];
+                                agent.destination = target.transform.position;
+                            }
+                        }
+                        
+                        if (ticker > 100)
+                        {
+                            possibleTargets = ComposeA(scaleables);
+                            ticker = 0;
+                            i = 1;
+                        }
+                        
+                        // agent.destination = scaleables[i].transform.position;
+                    }
+                    else
+                    {
+                        if (ticker > 100)
+                        {
+                            possibleTargets = ComposeA(scaleables);
+                            ticker = 0;
+                            i = 1;
+                        }
+                        target = null;
+                        agent.destination = station.position;
                     }
                 }
            }
@@ -90,7 +132,7 @@
 
         void OnCollisionEnter(Collision collision)
         {
-            if (target != null)
+            if (target != null && collision.gameObject != null)
             {
                 Debug.Log("COLLIDING!");
                 if ((collision.gameObject == target) && (target.tag != "Player"))
@@ -113,18 +155,45 @@
                 }
             }
         }
-
-        void quickSort(GameObject[] A, int lo, int hi)
+        List<GameObject> ComposeA(GameObject[] A)
+        {
+            possibleTargets.Clear();
+            for(int i = 0; i < A.Length; i++)
+            {
+                if(A[i].GetComponent<Scaler>().isScaled)
+                {
+                    possibleTargets.Add(A[i]);
+                }
+            }
+            if(possibleTargets.Count > 1)
+            {
+                return quickSort(possibleTargets, 0, possibleTargets.Count-1);
+            }
+            else
+            {
+                if(possibleTargets.Count > 0)
+                {
+                    return possibleTargets;
+                }
+                else
+                {
+                    possibleTargets.Add(A[0]);
+                    return possibleTargets;
+                }
+            }
+        }
+        List<GameObject> quickSort(List<GameObject> A, int lo, int hi)
         {
             if (lo < hi)
             {
                 int p = partition(A, lo, hi);
-                quickSort(A, lo, p-1);
-                quickSort(A, p+1, hi);
+                A = quickSort(A, lo, p-1);
+                A = quickSort(A, p+1, hi);
             }
+            return A;
         }
 
-        int partition(GameObject[] A, int lo, int hi)
+        int partition(List<GameObject> A, int lo, int hi)
         {
             int mid = (lo + hi) / 2;
             if(Math.Abs(1 - A[hi].transform.localScale[0]) + Vector3.Distance(A[hi].transform.position, transform.position) < Math.Abs(1 - A[lo].transform.localScale[0]) + Vector3.Distance(A[lo].transform.position, transform.position))
@@ -160,7 +229,7 @@
 
                     i = i + 1;
                     // Debug.Log("A[i] Test: " + A[i]);
-                    if(i < A.Length)
+                    if(i < A.Count)
                     {
                         i = i -1;
                         break;

@@ -43,7 +43,7 @@ namespace OurGame
 				{
 						if (IsGrounded() == false && agent.enabled)
 						{
-								Debug.Log("Am I Grounded?: " + IsGrounded());
+								// Debug.Log("Am I Grounded?: " + IsGrounded());
 								agent.enabled = false;
 								Rigidbody rigid_body = GetComponent<Rigidbody>();
 								rigid_body.useGravity = true;
@@ -52,7 +52,7 @@ namespace OurGame
 						}
 						else if (IsGrounded() && (goal.localScale[0] < fear_scale))
 						{
-							Debug.Log("Am I Grounded?: " + IsGrounded());							
+							// Debug.Log("Am I Grounded?: " + IsGrounded());							
 							agent.destination = goal.position;
 						}
 						else if (IsGrounded() && (goal.localScale[0] > fear_scale))
