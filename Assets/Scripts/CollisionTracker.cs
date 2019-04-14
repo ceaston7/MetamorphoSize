@@ -26,10 +26,10 @@ namespace OurGame {
 				{
 						//Debug.Log("NEW ENTER -------------------------");
 
-						foreach (ContactPoint point in collision.contacts)
+						/*foreach (ContactPoint point in collision.contacts)
 						{
 								Debug.Log(point.normal);
-						}
+						}*/
 
 						if (collisions.ContainsKey(collision.gameObject))
 						{

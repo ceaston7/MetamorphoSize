@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1198084999561017355, guid: 368954cf0520670458009a88a1dc68f6,
         type: 3}
       propertyPath: m_Name
-      value: BaseMediumCrate
+      value: 2UScaleMCrate
       objectReference: {fileID: 0}
     - target: {fileID: 6614648140655340802, guid: 368954cf0520670458009a88a1dc68f6,
         type: 3}
@@ -67,5 +67,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6389936545649702596, guid: 368954cf0520670458009a88a1dc68f6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4398a2bfbffd88c46990b5c89db413b5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 368954cf0520670458009a88a1dc68f6, type: 3}

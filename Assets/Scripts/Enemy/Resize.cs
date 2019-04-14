@@ -53,18 +53,18 @@
            {
                 for (int i = 0; i < scaleables.Length; i++)
                 {
-                    Debug.Log(scaleables);
+                    //Debug.Log(scaleables);
                     // Player is always priority
-                    Debug.Log(player[0]);
+                    //Debug.Log(player[0]);
                     if (player[0].transform.localScale[0] != 1)
                     {
-                        Debug.Log("Priority Target: Player Resize Detected!");
+                        //Debug.Log("Priority Target: Player Resize Detected!");
                         agent.destination = player[0].transform.position;
                         target = player[0];
                     }
                     else if (scaleables[i].GetComponent<Scaler>().isScaled)
                     {
-                        Debug.Log("Setting Target.");
+                        //Debug.Log("Setting Target.");
                         if (ticker > 4)
                         {
                             quickSort(scaleables, 0, scaleables.Length-1);

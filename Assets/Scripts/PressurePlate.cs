@@ -80,6 +80,8 @@ namespace OurGame
 						if (count < 0 || currentWeight < 0)
 						{
 								Debug.Log("Negative count or weight");
+								count = 0;
+								currentWeight = 0;
 						}
 				}
 		}

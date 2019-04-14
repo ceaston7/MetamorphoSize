@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4283,7 +4283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974137152}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 27.98, y: -0.83, z: 1.6}
+  m_LocalPosition: {x: 5.32, y: 12.44, z: 40.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6048,7 +6048,7 @@ PrefabInstance:
     - target: {fileID: 570109187705088121, guid: 4119a3ae534764040b540327d0c212fa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.37
+      value: 2.78
       objectReference: {fileID: 0}
     - target: {fileID: 570109187705088121, guid: 4119a3ae534764040b540327d0c212fa,
         type: 3}
@@ -7535,24 +7535,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: cff9fc9d726c8464595de7a74269eecd,
     type: 3}
   m_PrefabInstance: {fileID: 1607862808}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1617715316 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5141127935502301186, guid: ef869522a9c17e486a44f3eda589cbd0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5141127934959933558}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4083b78e262202a4999fcc686c3a0182, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!195 &1617715318 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 5141127935502301184, guid: ef869522a9c17e486a44f3eda589cbd0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5141127934959933558}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1647801712
 PrefabInstance:
@@ -9895,27 +9877,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2107881954}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2124526327 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3291517569189076446, guid: 01f1493fff5303447b75d7f24bfa92af,
-    type: 3}
-  m_PrefabInstance: {fileID: 108495497}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2124526334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2124526327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06be695202dd7c04ab717334f0f55a47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 1617715318}
-  script1: {fileID: 1617715316}
-  script2: {fileID: 0}
 --- !u!1001 &2130564993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11857,6 +11818,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spoderman
       objectReference: {fileID: 0}
+    - target: {fileID: 5141127935502301186, guid: ef869522a9c17e486a44f3eda589cbd0,
+        type: 3}
+      propertyPath: hiding_spot
+      value: 
+      objectReference: {fileID: 1357802162}
     - target: {fileID: 5141127935502301199, guid: ef869522a9c17e486a44f3eda589cbd0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11912,11 +11878,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5141127935502301186, guid: ef869522a9c17e486a44f3eda589cbd0,
-        type: 3}
-      propertyPath: hiding_spot
-      value: 
-      objectReference: {fileID: 1357802162}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef869522a9c17e486a44f3eda589cbd0, type: 3}
 --- !u!23 &5266063012424881118
