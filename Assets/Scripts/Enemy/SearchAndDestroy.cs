@@ -76,7 +76,7 @@ namespace OurGame
 
 				bool IsGrounded()
 				{
-						return Physics.Raycast(transform.position, -Vector3.up, distToGround + 5f);
+						return Physics.Raycast(transform.position, -Vector3.up, distToGround + .5f);
 				}
 
 				void OnCollisionEnter(Collision collision)

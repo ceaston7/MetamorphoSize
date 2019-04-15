@@ -8,6 +8,7 @@ TagManager:
   - Scaleable
   - HidingSpot
   - PowerUp
+  - Enemy
   layers:
   - Default
   - TransparentFX
