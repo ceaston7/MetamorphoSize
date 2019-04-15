@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 702713687747270410}
   - component: {fileID: 4217833983006005283}
   - component: {fileID: 1962095121215898679}
+  - component: {fileID: 4837974354083488737}
   m_Layer: 0
   m_Name: 2BaseMCrate
   m_TagString: Untagged
@@ -138,3 +139,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4837974354083488737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198084999561017355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1093e3a6001b942ac0fe845b75723b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeepPosition: 0

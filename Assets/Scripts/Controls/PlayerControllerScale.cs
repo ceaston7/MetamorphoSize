@@ -17,6 +17,13 @@ public class PlayerControllerScale : MonoBehaviour
 		public RigidbodyFirstPersonController m_RigidBody;
 		public CapsuleCollider m_Capsule;
 		private bool inAction;
+		private bool scaling = false;
+		
+		private Transform gunTip;
+		public GameObject RayBlue;
+		public GameObject RayOrange;
+		private GameObject beam;
+		public LayerMask layerMask;
 
 		public float defaultHeight;
 
@@ -39,17 +46,31 @@ public class PlayerControllerScale : MonoBehaviour
 				defaultGroundCheck = m_RigidBody.advancedSettings.groundCheckDistance;
 				maxRadius = defaultRadius + (maxScale-1);
 				maxHeight = defaultHeight + (maxScale-1);
-
+				gunTip = GameObject.Find("GunTip").transform;
 		}
 
 
 		void FixedUpdate()
 		{
+				if(!(CrossPlatformInputManager.GetAxis("Fire1") != 0 || CrossPlatformInputManager.GetAxis("Fire2") != 0) && scaling){
+						scaling = false;
+						DestroyGunEffect();
+				}
+
 				if (CrossPlatformInputManager.GetAxis("Fire1") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
 				{
 						RaycastHit hit;
-						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 200);
+						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
 						Debug.DrawRay(cam.transform.position, cam.transform.forward * 200, Color.red);
+
+						if (!scaling){
+								CreateGunEffect(RayBlue, hit);
+								scaling = true;
+						}
+						else {
+								UpdateBeam(hit);
+						}
+
 						if (hit.collider != null)
 						{
 								try
@@ -62,7 +83,17 @@ public class PlayerControllerScale : MonoBehaviour
 				else if (CrossPlatformInputManager.GetAxis("Fire2") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
 				{
 						RaycastHit hit;
-						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 200);
+						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
+
+						if (!scaling)
+						{
+								CreateGunEffect(RayOrange, hit);
+								scaling = true;
+						}
+						else {
+								UpdateBeam(hit);
+						}
+
 						if (hit.collider != null)
 						{
 								try
@@ -202,4 +233,23 @@ public class PlayerControllerScale : MonoBehaviour
         while (inAction)
             yield return null;
     }
+
+		private void CreateGunEffect(GameObject beamType, RaycastHit ray){
+				beam = Instantiate(beamType, gunTip.transform.position, Quaternion.LookRotation(cam.transform.forward));
+				beam.transform.localScale.Set(beam.transform.localScale.x, beam.transform.localScale.y, (ray.point - gunTip.transform.position).magnitude);
+		}
+
+		private void DestroyGunEffect(){
+				Debug.Log("DESTROYING");
+				Destroy(beam);
+		}
+
+		private void UpdateBeam(RaycastHit ray){
+				Debug.Log("Updating beam");
+				Debug.Log(ray.transform.localToWorldMatrix.MultiplyVector(ray.transform.forward));
+				beam.transform.position = gunTip.transform.position;
+				beam.transform.rotation = Quaternion.LookRotation(cam.transform.forward);
+				Debug.Log("magnitude: " + (ray.point - gunTip.transform.position).magnitude);
+				beam.transform.localScale.Set(beam.transform.localScale.x, beam.transform.localScale.y, (ray.point - gunTip.transform.position).magnitude);
+		}
 }
