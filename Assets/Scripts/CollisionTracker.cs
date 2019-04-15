@@ -149,8 +149,8 @@ namespace OurGame {
 						}
 
 						if (aHasRigid && bHasRigid) {
-								if (	a.GetComponent<CollisionTracker>().currentMass > baseMass + 10 
-										&& b.GetComponent<CollisionTracker>().currentMass > baseMass + 10){
+								if (	a.GetComponent<CollisionTracker>().currentMass > baseMass 
+										&& b.GetComponent<CollisionTracker>().currentMass > baseMass){
 										
 										return true;
 								}
@@ -163,7 +163,7 @@ namespace OurGame {
 										b = temp;
 								}
 
-								if (a.GetComponent<CollisionTracker>().currentMass > baseMass + 10){
+								if (a.GetComponent<CollisionTracker>().currentMass > baseMass){
 										return true;
 								}
 						}

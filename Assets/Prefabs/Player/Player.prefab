@@ -75,7 +75,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471106375}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 6
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -188,7 +188,7 @@ MonoBehaviour:
     type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   defaultHeight: 0
 --- !u!114 &8254680594355177268
 MonoBehaviour:
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dc48259c2a3b142b93c4c079dd1007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMass: 14
+  baseMass: 6
   currentMass: 0
   isScalable: 0
 --- !u!114 &8979866490265498028
