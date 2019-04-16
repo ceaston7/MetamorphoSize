@@ -5,6 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Characters.FirstPerson;
 using OurGame;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControllerScale : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PlayerControllerScale : MonoBehaviour
 		public CapsuleCollider m_Capsule;
 		private bool inAction;
 		private bool scaling = false;
+		public Canvas canvas;
+		private bool paused = false;
 		
 		private Transform gunTip;
 		public GameObject RayBlue;
@@ -47,158 +50,192 @@ public class PlayerControllerScale : MonoBehaviour
 				maxRadius = defaultRadius + (maxScale-1);
 				maxHeight = defaultHeight + (maxScale-1);
 				gunTip = GameObject.Find("GunTip").transform;
+				canvas = Canvas.FindObjectOfType<Canvas>();
 		}
 
+		void Update(){
+				if (Input.GetButton("Pause"))
+				{
+						if(!inAction){
+								paused = !paused;
+						}
+
+						inAction = true;
+						StartCoroutine(Action());
+						if (paused)
+						{
+								Time.timeScale = 0;
+								canvas.GetComponentInChildren<Text>().enabled = true;
+						}
+						else
+						{
+								Time.timeScale = 1;
+								canvas.GetComponentInChildren<Text>().enabled = false;
+						}
+				}
+				else if (CrossPlatformInputManager.GetButton("Cancel"))
+				{
+						Application.Quit();
+				}
+				else if (!Input.GetButton("Pause"))
+				{
+						inAction = false;
+				}
+		}
 
 		void FixedUpdate()
 		{
-				if(!(CrossPlatformInputManager.GetAxis("Fire1") != 0 || CrossPlatformInputManager.GetAxis("Fire2") != 0) && scaling){
-						scaling = false;
-						DestroyGunEffect();
-				}
-
-				if (CrossPlatformInputManager.GetAxis("Fire1") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
+				if (!paused)
 				{
-						RaycastHit hit;
-						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
-						Debug.DrawRay(cam.transform.position, cam.transform.forward * 200, Color.red);
-
-						if (!scaling){
-								CreateGunEffect(RayBlue, hit);
-								scaling = true;
-						}
-						else {
-								UpdateBeam(hit);
-						}
-
-						if (hit.collider != null)
+						if (!(CrossPlatformInputManager.GetAxis("Fire1") != 0 || CrossPlatformInputManager.GetAxis("Fire2") != 0) && scaling)
 						{
-								try
+								scaling = false;
+								DestroyGunEffect();
+						}
+
+						if (CrossPlatformInputManager.GetAxis("Fire1") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
+						{
+								RaycastHit hit;
+								Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
+								Debug.DrawRay(cam.transform.position, cam.transform.forward * 200, Color.red);
+
+								if (!scaling)
 								{
-									hit.collider.gameObject.GetComponent<Scaler>().scale(-1);
+										CreateGunEffect(RayBlue, hit);
+										scaling = true;
 								}
-								catch { }
-						}
-				}
-				else if (CrossPlatformInputManager.GetAxis("Fire2") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
-				{
-						RaycastHit hit;
-						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
-
-						if (!scaling)
-						{
-								CreateGunEffect(RayOrange, hit);
-								scaling = true;
-						}
-						else {
-								UpdateBeam(hit);
-						}
-
-						if (hit.collider != null)
-						{
-								try
+								else
 								{
-									hit.collider.gameObject.GetComponent<Scaler>().scale(1);
+										UpdateBeam(hit);
 								}
-								catch { }
-						}
-				}
-				else if(CrossPlatformInputManager.GetAxis("Fire3") != 0 && !inAction)
-				{
-						RaycastHit hit;
-						Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
 
-						if (cam.transform.Find("Hand").gameObject.transform.childCount > 0)
-            					{
-							inAction = true;
-							GameObject obj = cam.transform.Find("Hand").GetChild(0).gameObject;
-							obj.GetComponent<PickUp>().Move();
-							StartCoroutine(Action());
+								if (hit.collider != null)
+								{
+										try
+										{
+												hit.collider.gameObject.GetComponent<Scaler>().scale(-1);
+										}
+										catch { }
+								}
 						}
-						else if (hit.collider != null)
+						else if (CrossPlatformInputManager.GetAxis("Fire2") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
 						{
-							try
-                					{
-                    						inAction = true;
-                    						hit.collider.GetComponent<PickUp>().Move();
-                    						StartCoroutine(Action());
-                                			}
-								catch { }
+								RaycastHit hit;
+								Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
+
+								if (!scaling)
+								{
+										CreateGunEffect(RayOrange, hit);
+										scaling = true;
+								}
+								else
+								{
+										UpdateBeam(hit);
+								}
+
+								if (hit.collider != null)
+								{
+										try
+										{
+												hit.collider.gameObject.GetComponent<Scaler>().scale(1);
+										}
+										catch { }
+								}
 						}
-				}
-				else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
-				{
-					Vector3 newScale = transform.localScale + new Vector3(.1F, .1F, .1F);
-					
-					if(SanityChecker(newScale))
-					{
-						transform.localScale = newScale;
-						// Handle Ground Check
-						m_RigidBody.advancedSettings.groundCheckDistance += .1F; 
-						// Handle Radius
-						if(m_Capsule.radius + .1 > maxRadius)
+						else if (CrossPlatformInputManager.GetAxis("Fire3") != 0 && !inAction)
 						{
-							m_Capsule.radius = maxRadius;
+								RaycastHit hit;
+								Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
+
+								if (cam.transform.Find("Hand").gameObject.transform.childCount > 0)
+								{
+										inAction = true;
+										GameObject obj = cam.transform.Find("Hand").GetChild(0).gameObject;
+										obj.GetComponent<PickUp>().Move();
+										StartCoroutine(Action());
+								}
+								else if (hit.collider != null)
+								{
+										try
+										{
+												inAction = true;
+												hit.collider.GetComponent<PickUp>().Move();
+												StartCoroutine(Action());
+										}
+										catch { }
+								}
 						}
-						else
+						else if (CrossPlatformInputManager.GetAxis("Scale0") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
 						{
-							m_Capsule.radius += .1F;
+								Vector3 newScale = transform.localScale + new Vector3(.1F, .1F, .1F);
+
+								if (SanityChecker(newScale))
+								{
+										transform.localScale = newScale;
+										// Handle Ground Check
+										m_RigidBody.advancedSettings.groundCheckDistance += .1F;
+										// Handle Radius
+										if (m_Capsule.radius + .1 > maxRadius)
+										{
+												m_Capsule.radius = maxRadius;
+										}
+										else
+										{
+												m_Capsule.radius += .1F;
+										}
+										// Handle Height breaks groundCheck if it doesn't grow
+										if (m_Capsule.height + .1F > maxHeight)
+										{
+												m_Capsule.height = maxHeight;
+										}
+										else
+										{
+												m_Capsule.height += .1F;
+										}
+								}
+								else
+								{
+										Debug.Log(transform.localScale);
+								}
 						}
-						// Handle Height breaks groundCheck if it doesn't grow
-						if(m_Capsule.height + .1F > maxHeight)
+						else if (CrossPlatformInputManager.GetAxis("Scale1") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
 						{
-							m_Capsule.height = maxHeight;
+								Vector3 newScale = transform.localScale - new Vector3(.1F, .1F, .1F);
+								if (SanityChecker(newScale))
+								{
+										transform.localScale = newScale;
+										m_RigidBody.advancedSettings.groundCheckDistance += -.1F;
+										if ((m_Capsule.radius - .1F) <= .1f)
+										{
+												m_Capsule.radius = .1f;
+										}
+										else
+										{
+												m_Capsule.radius += -.1f;
+										}
+										// Height shouldn't change if we shrink (Breaks movement physics)
+										if (m_Capsule.height != defaultHeight)
+										{
+												m_Capsule.height = defaultHeight;
+										}
+								}
+								else
+								{
+										Debug.Log(newScale);
+								}
 						}
-						else
+						else if (CrossPlatformInputManager.GetAxis("Scale3") != 0)
 						{
-							m_Capsule.height += .1F;
+								transform.localScale = new Vector3(1f, 1f, 1f);
+								m_Capsule.radius = defaultRadius;
+								m_RigidBody.advancedSettings.groundCheckDistance = defaultGroundCheck;
+								m_Capsule.height = defaultHeight;
 						}
-					}
-					else
-					{
-						Debug.Log(transform.localScale);
-					}
-				}
-				else if (CrossPlatformInputManager.GetAxis("Scale1") != 0 && playerState.haveTool[(int)Tool.SizeSelf] == true)
-				{
-					Vector3 newScale = transform.localScale - new Vector3(.1F, .1F, .1F);
-					if(SanityChecker(newScale))
-					{
-						transform.localScale = newScale;
-						m_RigidBody.advancedSettings.groundCheckDistance += -.1F;
-						if ((m_Capsule.radius - .1F) <= .1f)
+
+						if (CrossPlatformInputManager.GetAxis("Fire3") == 0)
 						{
-							m_Capsule.radius = .1f;
-						} 	
-						else
-						{
-							m_Capsule.radius += -.1f;
+								inAction = false;
 						}
-						// Height shouldn't change if we shrink (Breaks movement physics)
-						if(m_Capsule.height != defaultHeight)
-						{
-							m_Capsule.height = defaultHeight;
-						}
-					}
-					else
-					{
-						Debug.Log(newScale);
-					}
-				}
-				else if(CrossPlatformInputManager.GetAxis("Scale3") != 0){
-						transform.localScale = new Vector3(1f, 1f, 1f);
-						m_Capsule.radius = defaultRadius;
-						m_RigidBody.advancedSettings.groundCheckDistance = defaultGroundCheck;
-						m_Capsule.height = defaultHeight;
-				}
-				else if (CrossPlatformInputManager.GetAxis("Cancel") != 0)
-					{
-					    Application.Quit();
-					}
-					
-				 if(CrossPlatformInputManager.GetAxis("Fire3") == 0)
-				{
-				    inAction = false;
 				}
 			}
 

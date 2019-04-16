@@ -9,6 +9,7 @@ TagManager:
   - HidingSpot
   - PowerUp
   - Enemy
+  - Object
   layers:
   - Default
   - TransparentFX
