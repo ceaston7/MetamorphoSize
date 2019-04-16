@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelOneMostlyFinishedCosmetics.unity
     guid: 2b88f1f7454a7f24f8bf89137cd35f3a
   - enabled: 1
+    path: Assets/Scenes/Level02Finished.unity
+    guid: b502ca23f304d3240a1e7f5ccc43629b
+  - enabled: 1
     path: Assets/Scenes/Credits_Scene.unity
     guid: 4b8bc7d84c5b98642a8746e2224ec7ca
   - enabled: 1
