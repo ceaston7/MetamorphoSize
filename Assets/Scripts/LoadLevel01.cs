@@ -24,7 +24,7 @@ public class LoadLevel01 : MonoBehaviour
 
     public void loadCredits()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void endGame()
