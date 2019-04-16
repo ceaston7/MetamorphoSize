@@ -9,11 +9,14 @@ namespace OurGame
 				public bool isScaled = false;
 				public Vector3 defaultScale;
 				private float scaleFactor = 0.7f;
-				private Vector3 scaleWeight = new Vector3(1,1,1); //Ensures that objects scale uniformly
+				private Vector3 scaleWeight = new Vector3(1, 1, 1); //Ensures that objects scale uniformly
 				private int greatestDim; //Stores which of x, y, or z scale is largest
 				public bool canGrow = true;
 				public float maxSize = float.PositiveInfinity;
 				public float minSize = float.NegativeInfinity;
+				private bool firstTime = true;
+				public AudioClip clip;
+				public bool playClip = false;
 
 				void Start()
 				{
@@ -32,8 +35,18 @@ namespace OurGame
 
 				public void scale(float growOrShrink)
 				{
-						transform.localScale += (scaleWeight * scaleFactor * transform.localScale[greatestDim] * growOrShrink * Time.deltaTime) 
-																		* (!canGrow && growOrShrink == 1 ? 0: 1) 
+						if (playClip)
+						{
+								if (growOrShrink == 1 && !canGrow && firstTime)
+								{
+										firstTime = false;
+										playClip = false;
+										gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
+								}
+						}
+
+						transform.localScale += (scaleWeight * scaleFactor * transform.localScale[greatestDim] * growOrShrink * Time.deltaTime)
+																		* (!canGrow && growOrShrink == 1 ? 0 : 1)
 																		* ((transform.localScale[greatestDim] < maxSize && transform.localScale[greatestDim] > minSize) ? 1 : 0);
 						isScaled = true;
 				}

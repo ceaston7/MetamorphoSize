@@ -95,7 +95,7 @@ MonoBehaviour:
   activates: []
   onMat: {fileID: 2100000, guid: ba8ec895c19434f438912b402b8e765e, type: 2}
   offMat: {fileID: 2100000, guid: 2239968a84952f8479fbc243a483ffdd, type: 2}
-  requiredWeight: 0
+  requiredWeight: 9
   currentWeight: 0
 --- !u!114 &6245415322323755963
 MonoBehaviour:
