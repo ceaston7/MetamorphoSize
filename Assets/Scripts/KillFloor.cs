@@ -16,6 +16,7 @@ namespace OurGame
                     level.GetComponent<LevelState>().Respawn();
                     break;
                 case "Object":
+								case "Scaleable":
                     other.transform.position = other.GetComponent<ObjectState>().GetSpawnLocation();
                     other.transform.localScale = other.GetComponent<ObjectState>().GetSpawnSize();
                     break;

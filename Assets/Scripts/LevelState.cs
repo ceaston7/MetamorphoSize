@@ -24,7 +24,14 @@ namespace OurGame
                 item.transform.position = item.GetComponent<ObjectState>().GetSpawnLocation();
                 item.transform.localScale = item.GetComponent<ObjectState>().GetSpawnSize();
             }
-        }
+
+						objects = GameObject.FindGameObjectsWithTag("Scaleable");
+						foreach (var item in objects)
+						{
+								item.transform.position = item.GetComponent<ObjectState>().GetSpawnLocation();
+								item.transform.localScale = item.GetComponent<ObjectState>().GetSpawnSize();
+						}
+				}
 
         public void Checkpoint()
         {
@@ -36,7 +43,13 @@ namespace OurGame
             {
                 item.GetComponent<ObjectState>().SetSpawn();
             }
-        }
+
+						objects = GameObject.FindGameObjectsWithTag("Scaleable");
+						foreach (var item in objects)
+						{
+								item.GetComponent<ObjectState>().SetSpawn();
+						}
+				}
     }
 }
 
