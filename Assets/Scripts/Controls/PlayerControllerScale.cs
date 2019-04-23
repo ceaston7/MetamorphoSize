@@ -17,7 +17,8 @@ public class PlayerControllerScale : MonoBehaviour
 		public float defaultGroundCheck;
 		public RigidbodyFirstPersonController m_RigidBody;
 		public CapsuleCollider m_Capsule;
-		private bool inAction;
+		private bool inAction = false;
+		private bool pausable = false;
 		private bool scaling = false;
 		public Canvas canvas;
 		private bool paused = false;
@@ -56,11 +57,11 @@ public class PlayerControllerScale : MonoBehaviour
 		void Update(){
 				if (Input.GetButton("Pause"))
 				{
-						if(!inAction){
+						if(!pausable){
 								paused = !paused;
 						}
 
-						inAction = true;
+						pausable = true;
 						StartCoroutine(Action());
 						if (paused)
 						{
@@ -79,7 +80,7 @@ public class PlayerControllerScale : MonoBehaviour
 				}
 				else if (!Input.GetButton("Pause"))
 				{
-						inAction = false;
+						pausable = false;
 				}
 		}
 
@@ -152,7 +153,7 @@ public class PlayerControllerScale : MonoBehaviour
 										inAction = true;
 										GameObject obj = cam.transform.Find("Hand").GetChild(0).gameObject;
 										obj.GetComponent<PickUp>().Move();
-										StartCoroutine(Action());
+										//StartCoroutine(Action());
 								}
 								else if (hit.collider != null)
 								{
@@ -160,7 +161,7 @@ public class PlayerControllerScale : MonoBehaviour
 										{
 												inAction = true;
 												hit.collider.GetComponent<PickUp>().Move();
-												StartCoroutine(Action());
+												//StartCoroutine(Action());
 										}
 										catch { }
 								}
@@ -267,7 +268,7 @@ public class PlayerControllerScale : MonoBehaviour
          }
     private IEnumerator Action()
     {
-        while (inAction)
+        while (pausable)
             yield return null;
     }
 
