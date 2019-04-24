@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -111,7 +111,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 1f36baa9250a64b2abc55d75b413bca9, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: b197b3b1631db7686b68cdd53dd77d20, type: 2}
 --- !u!1 &2103521
 GameObject:
   m_ObjectHideFlags: 0
@@ -3688,6 +3688,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.000001, y: 3.0004635, z: 1.1434903}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &101836921
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101836917}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 1.5000001, z: 0.572}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &102153661
 PrefabInstance:
   m_ObjectHideFlags: 0
