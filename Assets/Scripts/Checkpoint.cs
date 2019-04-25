@@ -7,6 +7,7 @@ namespace OurGame
     public class Checkpoint : MonoBehaviour
     {
         private GameObject levelState;
+				private bool firstTime = true;
 
         private void Start()
         {
@@ -15,9 +16,10 @@ namespace OurGame
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag("Player"))
+            if(firstTime && other.CompareTag("Player"))
             {
                 levelState.GetComponent<LevelState>().Checkpoint();
+								firstTime = false;
             }
         }
     }
