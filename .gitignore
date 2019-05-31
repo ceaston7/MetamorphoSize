@@ -6,6 +6,7 @@
 Assets/AssetStoreTools*
 Assets/Standard Assets/
 Assets/FbxExporters/
+Assets/SteamVR
 
 # Visual Studio cache directory
 .vs/
