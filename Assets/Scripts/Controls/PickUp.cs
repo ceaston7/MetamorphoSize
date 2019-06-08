@@ -6,50 +6,18 @@ namespace OurGame
     public class PickUp : MonoBehaviour
     {
         private bool held;
-        private GameObject hand;
         private Transform cam;
 
         private void Start()
         {
-            cam = Camera.main.transform;
-            if(cam.Find("Hand").gameObject)
-            {
-                hand = cam.Find("Hand").gameObject;
-            }
-            else
-            {
-                Vector3 location = cam.position;
-                hand = new GameObject("Hand");
-                hand.transform.parent = cam;
-                GameObject player = cam.parent.gameObject;
-                hand.transform.position = new Vector3(location.x, location.y + .5f, location.z + 3);
-            }
 
-            if (hand.GetComponent<Rigidbody>() == null)
-            {
-                // Give hand a rigidbody
-                Rigidbody body = hand.AddComponent<Rigidbody>();
-                body.isKinematic = true;
-                body.useGravity = false;
-            }
         }
 
-        private void Update()
-        {
-            // If the object collides with something and breaks the joint
-            // update the status of it being held and destroy hand.
-            if(gameObject.GetComponent<FixedJoint>() == null && hand.transform.childCount > 0)
-            {
-                gameObject.transform.parent = null;
-                held = false;
-            }
-        }
-
-        public void Move()
+        public void Move(GameObject hand)
         {
             if (!held)
             {
-                Pick();
+                Pick(hand);
             }
             else if (held)
             {
@@ -57,11 +25,9 @@ namespace OurGame
             }
         }
 
-        private void Pick()
+        private void Pick(GameObject hand)
         {
             // Move object into hand
-            transform.position = hand.transform.position;
-            transform.localRotation = cam.rotation;
             transform.parent = hand.transform;
  
             // Give object a FixedJoint to maintain physics
@@ -79,6 +45,12 @@ namespace OurGame
             gameObject.transform.parent = null;
             Destroy(gameObject.GetComponent<FixedJoint>());
 
+            held = false;
+        }
+
+        private void OnJointBreak()
+        {
+            gameObject.transform.parent = null;
             held = false;
         }
     }
