@@ -42,6 +42,10 @@
       "requirement": "mandatory"
     },
     {
+      "name": "/actions/default/in/TouchpadPress",
+      "type": "vector2"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
