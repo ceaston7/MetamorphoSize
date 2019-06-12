@@ -113,6 +113,14 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean ToggleGun
+        {
+            get
+            {
+                return SteamVR_Actions.default_ToggleGun;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

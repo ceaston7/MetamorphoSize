@@ -112,7 +112,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/teleport"
+                     "output" : "/actions/default/in/jump"
                   }
                },
                "mode" : "button",
@@ -171,7 +171,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/teleport"
+                     "output" : "/actions/default/in/togglegun"
                   }
                },
                "mode" : "button",
@@ -194,18 +194,6 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/jump"
-                  },
-                  "pull" : {
-                     "output" : "/actions/default/in/squeeze"
-                  }
-               },
-               "mode" : "trigger",
-               "path" : "/user/hand/left/input/trigger"
-            },
-            {
-               "inputs" : {
-                  "click" : {
                      "output" : "/actions/default/in/grow"
                   },
                   "pull" : {
@@ -219,6 +207,9 @@
                "inputs" : {
                   "position" : {
                      "output" : "/actions/default/in/touchpadpress"
+                  },
+                  "touch" : {
+                     "output" : "/actions/default/in/teleport"
                   }
                },
                "mode" : "trackpad",
