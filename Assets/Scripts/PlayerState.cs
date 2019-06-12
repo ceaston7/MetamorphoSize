@@ -5,22 +5,23 @@ using OurGame;
 
 namespace OurGame
 {
-		public class PlayerState : MonoBehaviour
-		{
-				public bool[] haveTool = { false, false };
-				public Tool currentTool;
-				public Transform spawn;
+    public class PlayerState : MonoBehaviour
+    {
+	    public bool[] haveTool = { false, false };
+	    public Tool currentTool;
+	    public Transform spawn;
+        public bool jumping = false;
 
-				// Start is called before the first frame update
-				void Start()
-				{
-						currentTool = Tool.SizeGun;
-						transform.position = spawn.position;
-				}
-		}
+	    // Start is called before the first frame update
+	    void Start()
+	    {
+			    currentTool = Tool.SizeGun;
+			    transform.position = spawn.position;
+	    }       
+    }
 
-		public enum Tool{
-				SizeGun = 0,
-				SizeSelf = 1
-		}
+    public enum Tool{
+		    SizeGun = 0,
+		    SizeSelf = 1
+    }
 }

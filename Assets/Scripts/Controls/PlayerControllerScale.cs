@@ -152,7 +152,7 @@ public class PlayerControllerScale : MonoBehaviour
 								{
 										inAction = true;
 										GameObject obj = cam.transform.Find("Hand").GetChild(0).gameObject;
-										obj.GetComponent<PickUp>().Move();
+										obj.GetComponent<PickUp>().Move(new GameObject());
 										//StartCoroutine(Action());
 								}
 								else if (hit.collider != null)
@@ -160,7 +160,7 @@ public class PlayerControllerScale : MonoBehaviour
 										try
 										{
 												inAction = true;
-												hit.collider.GetComponent<PickUp>().Move();
+												hit.collider.GetComponent<PickUp>().Move(new GameObject());
 												//StartCoroutine(Action());
 										}
 										catch { }

@@ -5,10 +5,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Teleport",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/default/in/GrabPinch",
       "type": "boolean"
     },
@@ -39,6 +35,15 @@
       "name": "/actions/default/in/HeadsetOnHead",
       "type": "boolean",
       "requirement": "optional"
+    },
+    {
+      "name": "/actions/default/in/Teleport",
+      "type": "boolean",
+      "requirement": "mandatory"
+    },
+    {
+      "name": "/actions/default/in/TouchpadPress",
+      "type": "vector2"
     },
     {
       "name": "/actions/default/out/Haptic",
@@ -72,6 +77,30 @@
       "name": "/actions/mixedreality/in/ExternalCamera",
       "type": "pose",
       "requirement": "optional"
+    },
+    {
+      "name": "/actions/metamorphosize/in/Direction",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/metamorphosize/in/Move",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/metamorphosize/in/Jump",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/metamorphosize/in/Shoot",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/metamorphosize/in/ChangeMode",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/metamorphosize/in/Grab",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -89,6 +118,10 @@
     },
     {
       "name": "/actions/mixedreality",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/metamorphosize",
       "usage": "single"
     }
   ],
@@ -140,7 +173,6 @@
       "/actions/default/in/Pose": "Pose",
       "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
       "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/in/Teleport": "Teleport",
       "/actions/default/out/Haptic": "Haptic",
       "/actions/platformer/in/Jump": "Jump"
     }
