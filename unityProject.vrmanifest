@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.metamorphosize.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\Adam\\Desktop\\MetaFINAL\\MetamorphoSize\\actions.json",
+      "action_manifest_path": "C:\\Users\\Christopher\\Documents\\MetamorphoSize\\actions.json",
       "strings": {
         "en_us": {
           "name": "MetamorphoSize [Testing]"
