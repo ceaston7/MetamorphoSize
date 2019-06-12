@@ -29,7 +29,7 @@ public class SetPlaySpaceCollider : MonoBehaviour
         collider.center = new Vector3(head.localPosition.x, head.localPosition.y * 0.5f, head.localPosition.z);
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         collider.size = new Vector3(capsule.radius * 2, head.localPosition.y, capsule.radius * 2);
         collider.center = new Vector3(head.localPosition.x, head.localPosition.y * 0.5f, head.localPosition.z);

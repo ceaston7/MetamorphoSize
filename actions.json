@@ -29,7 +29,7 @@
     {
       "name": "/actions/default/in/Squeeze",
       "type": "vector1",
-      "requirement": "optional"
+      "requirement": "suggested"
     },
     {
       "name": "/actions/default/in/HeadsetOnHead",
@@ -44,6 +44,18 @@
     {
       "name": "/actions/default/in/TouchpadPress",
       "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/Jump",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Grow",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/ToggleGun",
+      "type": "boolean"
     },
     {
       "name": "/actions/default/out/Haptic",
@@ -106,7 +118,7 @@
   "action_sets": [
     {
       "name": "/actions/default",
-      "usage": "single"
+      "usage": "leftright"
     },
     {
       "name": "/actions/platformer",
