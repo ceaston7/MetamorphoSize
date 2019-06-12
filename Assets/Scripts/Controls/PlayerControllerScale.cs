@@ -6,10 +6,11 @@ using UnityStandardAssets.Characters.FirstPerson;
 using OurGame;
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR;
 
 public class PlayerControllerScale : MonoBehaviour
 {
-		public Camera cam;
+		public Transform gun;
 		private float maxScale;
 		private float minScale;
 		private PlayerState playerState;
@@ -35,8 +36,7 @@ public class PlayerControllerScale : MonoBehaviour
 		private float maxHeight;
 		void Start()
 		{
-				cam = Camera.main;
-
+ 
 				maxScale =  1.31F;
 				minScale = .69F;
 
@@ -50,7 +50,6 @@ public class PlayerControllerScale : MonoBehaviour
 				defaultGroundCheck = m_RigidBody.advancedSettings.groundCheckDistance;
 				maxRadius = defaultRadius + (maxScale-1);
 				maxHeight = defaultHeight + (maxScale-1);
-				gunTip = GameObject.Find("GunTip").transform;
 				canvas = Canvas.FindObjectOfType<Canvas>();
 		}
 
@@ -84,30 +83,30 @@ public class PlayerControllerScale : MonoBehaviour
 				}
 		}
 
-		void FixedUpdate()
+    public SteamVR_Action_Boolean m_MovePressShrink = null;
+
+    void FixedUpdate()
 		{
 				if (!paused)
 				{
 						if (!(CrossPlatformInputManager.GetAxis("Fire1") != 0 || CrossPlatformInputManager.GetAxis("Fire2") != 0) && scaling)
 						{
 								scaling = false;
-								DestroyGunEffect();
 						}
 
-						if (CrossPlatformInputManager.GetAxis("Fire1") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
+						if (m_MovePressShrink.state)
 						{
 								RaycastHit hit;
-								Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
-								Debug.DrawRay(cam.transform.position, cam.transform.forward * 200, Color.red);
-
+								Physics.Raycast(gun.position, gun.forward, out hit, 10000f, layerMask.value);
+								Debug.DrawRay(gun.position, gun.forward * 200, Color.red);
+                if(hit.collider != null) Debug.Log(hit.collider.gameObject);
 								if (!scaling)
 								{
-										CreateGunEffect(RayBlue, hit);
 										scaling = true;
 								}
 								else
 								{
-										UpdateBeam(hit);
+
 								}
 
 								if (hit.collider != null)
@@ -122,16 +121,15 @@ public class PlayerControllerScale : MonoBehaviour
 						else if (CrossPlatformInputManager.GetAxis("Fire2") != 0 && playerState.haveTool[(int)Tool.SizeGun] == true)
 						{
 								RaycastHit hit;
-								Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10000f, layerMask.value);
+								Physics.Raycast(gun.position, gun.forward, out hit, 10000f, layerMask.value);
 
 								if (!scaling)
 								{
-										CreateGunEffect(RayOrange, hit);
 										scaling = true;
 								}
 								else
 								{
-										UpdateBeam(hit);
+
 								}
 
 								if (hit.collider != null)
@@ -146,12 +144,12 @@ public class PlayerControllerScale : MonoBehaviour
 						else if (CrossPlatformInputManager.GetAxis("Fire3") != 0 && !inAction)
 						{
 								RaycastHit hit;
-								Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3.0f);
+								Physics.Raycast(gun.position, gun.forward, out hit, 3.0f);
 
-								if (cam.transform.Find("Hand").gameObject.transform.childCount > 0)
+								if (gun.Find("Hand").gameObject.transform.childCount > 0)
 								{
 										inAction = true;
-										GameObject obj = cam.transform.Find("Hand").GetChild(0).gameObject;
+										GameObject obj = gun.transform.Find("Hand").GetChild(0).gameObject;
 										obj.GetComponent<PickUp>().Move(new GameObject());
 										//StartCoroutine(Action());
 								}
@@ -271,23 +269,5 @@ public class PlayerControllerScale : MonoBehaviour
         while (pausable)
             yield return null;
     }
-
-		private void CreateGunEffect(GameObject beamType, RaycastHit ray){
-				beam = Instantiate(beamType, gunTip.transform.position, Quaternion.LookRotation(cam.transform.forward));
-				beam.transform.localScale.Set(beam.transform.localScale.x, beam.transform.localScale.y, (ray.point - gunTip.transform.position).magnitude);
-		}
-
-		private void DestroyGunEffect(){
-				Debug.Log("DESTROYING");
-				Destroy(beam);
-		}
-
-		private void UpdateBeam(RaycastHit ray){
-				Debug.Log("Updating beam");
-				Debug.Log(ray.transform.localToWorldMatrix.MultiplyVector(ray.transform.forward));
-				beam.transform.position = gunTip.transform.position;
-				beam.transform.rotation = Quaternion.LookRotation(cam.transform.forward);
-				Debug.Log("magnitude: " + (ray.point - gunTip.transform.position).magnitude);
-				beam.transform.localScale.Set(beam.transform.localScale.x, beam.transform.localScale.y, (ray.point - gunTip.transform.position).magnitude);
-		}
+   
 }

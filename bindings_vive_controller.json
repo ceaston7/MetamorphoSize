@@ -193,6 +193,9 @@
             },
             {
                "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/jump"
+                  },
                   "pull" : {
                      "output" : "/actions/default/in/squeeze"
                   }
@@ -202,6 +205,9 @@
             },
             {
                "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/grow"
+                  },
                   "pull" : {
                      "output" : "/actions/default/in/squeeze"
                   }
@@ -219,13 +225,41 @@
                "path" : "/user/hand/left/input/trackpad"
             },
             {
-               "inputs" : {
-                  "position" : {
-                     "output" : "/actions/default/in/touchpadpress"
-                  }
-               },
+               "inputs" : {},
                "mode" : "trackpad",
                "path" : "/user/hand/right/input/trackpad"
+            },
+            {
+               "inputs" : {},
+               "mode" : "none",
+               "path" : "/user/hand/left/input/system"
+            },
+            {
+               "inputs" : {},
+               "mode" : "none",
+               "path" : "/user/hand/right/input/system"
+            }
+         ]
+      },
+      "/actions/metamorphosize" : {
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/metamorphosize/in/jump"
+                  }
+               },
+               "mode" : "toggle_button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/metamorphosize/in/jump"
+                  }
+               },
+               "mode" : "toggle_button",
+               "path" : "/user/hand/right/input/trigger"
             }
          ]
       },

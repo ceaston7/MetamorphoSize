@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using Valve.VR;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -122,15 +123,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
-            mouseLook.Init (transform, cam.transform);
         }
-
+        public SteamVR_Action_Boolean m_MovePressJump = null;
 
         private void Update()
         {
-            RotateView();
 
-            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
+            if (m_MovePressJump.state && !m_Jump)
             {
                 m_Jump = true;
             }
@@ -219,25 +218,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 };
 			movementSettings.UpdateDesiredTargetSpeed(input);
             return input;
-        }
-
-
-        private void RotateView()
-        {
-            //avoids the mouse looking if the game is effectively paused
-            if (Mathf.Abs(Time.timeScale) < float.Epsilon) return;
-
-            // get the rotation before it's changed
-            float oldYRotation = transform.eulerAngles.y;
-
-            mouseLook.LookRotation (transform, cam.transform);
-
-            if (m_IsGrounded || advancedSettings.airControl)
-            {
-                // Rotate the rigidbody velocity to match the new direction that the character is looking
-                Quaternion velRotation = Quaternion.AngleAxis(transform.eulerAngles.y - oldYRotation, Vector3.up);
-                m_RigidBody.velocity = velRotation*m_RigidBody.velocity;
-            }
         }
 
         /// sphere cast down just beyond the bottom of the capsule to see if the capsule is colliding round the bottom
