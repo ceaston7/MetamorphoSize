@@ -715,6 +715,9 @@ MonoBehaviour:
   m_MovePressToggle:
     actionPath: /actions/default/in/ToggleGun
     needsReinit: 0
+  m_MovePressQuit:
+    actionPath: /actions/default/in/Quit
+    needsReinit: 0
   head: {fileID: 2491006057379849633}
   body: {fileID: 2491006058053540795}
   collider: {fileID: 2491006056890955116}
