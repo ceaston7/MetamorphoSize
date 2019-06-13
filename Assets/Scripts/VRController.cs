@@ -33,7 +33,6 @@ public class VRController : MonoBehaviour
         HandleHead();
         HandleHeight();
         CalculateMovement();
-        Debug.Log("Position:" + transform.position);
     }
 
     private void HandleHead()
@@ -69,9 +68,6 @@ public class VRController : MonoBehaviour
             m_Speed += m_MoveValue.axis.y * m_Sensitivity;
             m_Speed = Mathf.Clamp(m_Speed, -m_MaxSpeed, m_MaxSpeed);
 
-            // Orientation
-            Debug.Log("Movement" + movement);
-     
             movement += orientation * (m_Speed * Vector3.forward) * Time.deltaTime;
         }
 
