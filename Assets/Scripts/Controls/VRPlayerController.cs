@@ -34,6 +34,7 @@ public class VRPlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(GameObject.Find("[ViveInputUtility]")) Destroy(GameObject.Find("[ViveInputUtility]"));
         if(body == null)
         {
             body = gameObject.GetComponent<Rigidbody>();

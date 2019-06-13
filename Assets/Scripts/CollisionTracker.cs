@@ -92,7 +92,7 @@ namespace OurGame {
 						}
 						catch { }
 
-						if (isScalable)
+						if (isScalable && gameObject.tag != "Player")
 						{
 								ContactPoint[] contactsA, contactsB;
 								for (int i = 0; i < gameObjects.Count; i++)
