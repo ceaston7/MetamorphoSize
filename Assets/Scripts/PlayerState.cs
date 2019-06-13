@@ -15,8 +15,12 @@ namespace OurGame
 	    // Start is called before the first frame update
 	    void Start()
 	    {
-			    currentTool = Tool.SizeGun;
-			    transform.position = spawn.position;
+            currentTool = Tool.SizeGun;
+            if(spawn == null)
+            {
+                spawn = GameObject.Find("Spawn").transform;
+            }
+            transform.position = spawn.position;
 	    }       
     }
 

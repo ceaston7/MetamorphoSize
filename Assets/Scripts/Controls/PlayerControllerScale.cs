@@ -107,11 +107,11 @@ namespace OurGame
                     shrink = !shrink;
                     if (shrink)
                     {
-                        //laser.setColor(shrinkColor);
+                        laser.setColor(shrinkColor);
                     }
                     else
                     {
-                        //laser.setColor(growColor);
+                        laser.setColor(growColor);
                     }
                     StartCoroutine(SwitchInput());
                 }
