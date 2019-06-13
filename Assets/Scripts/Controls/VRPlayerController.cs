@@ -11,6 +11,7 @@ public class VRPlayerController : MonoBehaviour
     public SteamVR_Action_Boolean m_Jump = null;
     public SteamVR_Action_Boolean m_MovePressShrink = null;
     public SteamVR_Action_Boolean m_MovePressToggle = null;
+    public SteamVR_Action_Boolean m_MovePressQuit = null;
     public GameObject head;
     public Rigidbody body;
     public CapsuleCollider collider;
@@ -48,6 +49,11 @@ public class VRPlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (m_MovePressQuit.state)
+        {
+            Debug.Log("Quit Game");
+            Application.Quit();
+        }
         Physics.SphereCast(head.transform.position, collider.radius - 0.1f, Vector3.up * -1.0f, out hit, collider.height * transform.localScale.x + 0.001f, spherecastMask);
         Debug.DrawRay(head.transform.position, Vector3.up * -1.0f * (collider.height * transform.localScale.x + 0.001f));
         if (hit.collider != null)

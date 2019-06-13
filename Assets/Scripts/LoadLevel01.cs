@@ -19,7 +19,7 @@ public class LoadLevel01 : MonoBehaviour
 
     public void loadScene()
     {
-        if (GameObject.Find("[ViveInputUtility]")) Destroy(GameObject.Find("[ViveInputUtility]"));
+        if (GameObject.Find("Vive")) Destroy(GameObject.Find("Vive"));
         SceneManager.LoadScene(1);
     }
 
